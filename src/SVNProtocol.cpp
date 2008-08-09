@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "SVNProtocol.h"
+#include "svn_dso.h"
 
 
 class CSVNProtocolModule : public CAtlDllModuleT< CSVNProtocolModule >
@@ -24,6 +25,16 @@ CSVNProtocolModule _AtlModule;
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	hInstance;
+	switch (dwReason)
+	{
+	case DLL_PROCESS_ATTACH:
+		apr_initialize();
+		svn_dso_initialize();
+		break;
+	case DLL_PROCESS_DETACH:
+		apr_terminate();
+		break;
+	}
     return _AtlModule.DllMain(dwReason, lpReserved); 
 }
 
