@@ -91,22 +91,12 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					}
 					else
 					{
-						m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-						m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-						m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
-						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
-						pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
-						pIProtSink->ReportResult(S_OK, 0, NULL);
+						CreateErrorPage(pIProtSink);
 					}
 				}
 				else
 				{
-					m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-					m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-					m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
-					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
-					pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
-					pIProtSink->ReportResult(S_OK, 0, NULL);
+					CreateErrorPage(pIProtSink);
 				}
 			}
 			else if (info->kind == svn_node_file)
@@ -117,12 +107,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 				CAtlString mimeType = svn.GetMimeType(wstring(szUrl));
 				if (svn.Err)
 				{
-					m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-					m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-					m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
-					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
-					pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
-					pIProtSink->ReportResult(S_OK, 0, NULL);
+					CreateErrorPage(pIProtSink);
 				}
 				else
 				{
@@ -157,43 +142,48 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						pIProtSink->ReportProgress(BINDSTATUS_CACHEFILENAMEAVAILABLE, cachePath);
 						if (!svn.Cat(wstring(szUrl), wstring(cachePath)))
 						{
-							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-							m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-							m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+							CreateErrorPage(pIProtSink);
 						}
-						//create a null expire and modified time
-						FILETIME ftExpireTime;
-						ftExpireTime.dwHighDateTime = 0;
-						ftExpireTime.dwLowDateTime = 0;
-						FILETIME ftModifiedTime;
-						ftModifiedTime.dwHighDateTime = 0;
-						ftModifiedTime.dwLowDateTime = 0;
-						CommitUrlCacheEntry(szUrl, cachePath, ftExpireTime, ftModifiedTime, 0, NULL, 0, NULL, szUrl);
-						bDownloadFinished = true;
-						ATLTRACE(_T("ReportData: file download finished\n"));
-						stream = svn.GetFileStream(cachePath);
-						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, m_fileSize, m_fileSize);
-						pIProtSink->ReportResult(S_OK, 200, 0);
+						else
+						{
+							//create a null expire and modified time
+							FILETIME ftExpireTime;
+							ftExpireTime.dwHighDateTime = 0;
+							ftExpireTime.dwLowDateTime = 0;
+							FILETIME ftModifiedTime;
+							ftModifiedTime.dwHighDateTime = 0;
+							ftModifiedTime.dwLowDateTime = 0;
+							CommitUrlCacheEntry(szUrl, cachePath, ftExpireTime, ftModifiedTime, 0, NULL, 0, NULL, szUrl);
+							bDownloadFinished = true;
+							ATLTRACE(_T("ReportData: file download finished\n"));
+							stream = svn.GetFileStream(cachePath);
+							pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, m_fileSize, m_fileSize);
+							pIProtSink->ReportResult(S_OK, 200, 0);
+						}
 					}
 					else
 					{
 						stream = svn.GetMemoryStream();
 						if (!svn.Cat(wstring(szUrl), stream))
 						{
-							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-							m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-							m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+							CreateErrorPage(pIProtSink);
 							svn_stream_close(stream);
 							stream = NULL;
+							bDownloadFinished = true;
 						}
-						bDownloadFinished = true;
-						ATLTRACE(_T("ReportData: file download finished\n"));
-						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
-						pIProtSink->ReportResult(S_OK, 200, 0);
+						else
+						{
+							bDownloadFinished = true;
+							ATLTRACE(_T("ReportData: file download finished\n"));
+							pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
+							pIProtSink->ReportResult(S_OK, 200, 0);
+						}
 					}
 				}
 			}
 		}
+		else
+			CreateErrorPage(pIProtSink);
 	}
 	else
 	{
@@ -349,3 +339,14 @@ STDMETHODIMP CSVNPluggableProtocol::QueryInfo( LPCWSTR pwzUrl, QUERYOPTION Query
 {
 	return INET_E_DEFAULT_ACTION;
 }
+
+void CSVNPluggableProtocol::CreateErrorPage(IInternetProtocolSink *pIProtSink)
+{
+	m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
+	m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
+	m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+	pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
+	pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
+	pIProtSink->ReportResult(S_OK, 0, NULL);
+}
+

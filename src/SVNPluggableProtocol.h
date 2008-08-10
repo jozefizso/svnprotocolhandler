@@ -73,6 +73,8 @@ public:
 		LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD dwReserved);
 
 private:
+	void CreateErrorPage(IInternetProtocolSink *pIProtSink);
+
 	CComPtr<IInternetProtocolSink> m_spSink;
 	CComPtr<IInternetBindInfo> m_spBindInfo;
 	DWORD m_dwPos;
