@@ -38,13 +38,15 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					if (dirInfo)
 					{
 						pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/html")));
-						m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head><body><h2>Subversion Repository - Revision %ld : /</h2><ul>", rev, rev);
+						m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><body><h2>Subversion Repository - Revision %ld : /</h2><ul>", rev, rev);
 
 						CStringA sItemInfo;
 						CStringA sItemUrl = CUnicodeUtils::StdGetUTF8(dirInfo->url).c_str();
 						CStringA sItemName = sItemUrl.Mid(sItemUrl.ReverseFind('/')+1);
 						sItemInfo.Format("<li><a href=\"%s\">%s</a></li>", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
 						m_sResultPage += sItemInfo;
+						map<CStringA, CStringA> infoMapFiles;
+						map<CStringA, CStringA> infoMapDirs;
 						for (size_t i=0; i<svn.GetFileCount(); ++i)
 						{
 							dirInfo = svn.GetNextFileInfo();
@@ -52,9 +54,22 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 							{
 								sItemUrl = CUnicodeUtils::StdGetUTF8(dirInfo->url).c_str();
 								sItemName = sItemUrl.Mid(sItemUrl.ReverseFind('/')+1);
+								if (dirInfo->kind == svn_node_dir)
+									sItemName += "/";
 								sItemInfo.Format("<li><a href=\"%s\">%s</a></li>", (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName));
-								m_sResultPage += sItemInfo;
+								if (dirInfo->kind == svn_node_dir)
+									infoMapDirs[sItemUrl] = sItemInfo;
+								else
+									infoMapFiles[sItemUrl] = sItemInfo;
 							}
+						}
+						for (map<CStringA, CStringA>::iterator it = infoMapDirs.begin(); it != infoMapDirs.end(); ++it)
+						{
+							m_sResultPage += it->second;
+						}
+						for (map<CStringA, CStringA>::iterator it = infoMapFiles.begin(); it != infoMapFiles.end(); ++it)
+						{
+							m_sResultPage += it->second;
 						}
 						m_sResultPage += "</ul><hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
 
