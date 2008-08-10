@@ -40,13 +40,15 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/html")));
 						m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><body><h2>Subversion Repository - Revision %ld : /</h2><ul>", rev, rev);
 
+						CString pageUrl = sUrl;
 						CStringA sItemInfo;
-						CStringA sItemUrl = CUnicodeUtils::StdGetUTF8(dirInfo->url).c_str();
-						CStringA sItemName = sItemUrl.Mid(sItemUrl.ReverseFind('/')+1);
+						CStringA sItemUrl = CUnicodeUtils::StdGetUTF8((LPCTSTR)pageUrl.Left(pageUrl.ReverseFind('/'))).c_str();
+						CStringA sItemName = "..";
 						sItemInfo.Format("<li><a href=\"%s\">%s</a></li>", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
 						m_sResultPage += sItemInfo;
 						map<CStringA, CStringA> infoMapFiles;
 						map<CStringA, CStringA> infoMapDirs;
+						pageUrl.TrimRight('/');
 						for (size_t i=0; i<svn.GetFileCount(); ++i)
 						{
 							dirInfo = svn.GetNextFileInfo();
