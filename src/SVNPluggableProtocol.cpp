@@ -38,13 +38,17 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					if (dirInfo)
 					{
 						pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/html")));
-						m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><body><h2>Subversion Repository - Revision %ld : /</h2><ul>", rev, rev);
+						m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head>\n\
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
+<body><h2>Subversion Repository - Revision %ld : /</h2>\n\
+<table cellspacing=\"5\">\n\
+<tr align=\"left\"><th width=\"50%%\">name</th><th align=\"right\" width=\"5%%\">rev</th><th>author</th><th>lock author</th></tr>\n", rev, rev);
 
 						CString pageUrl = sUrl;
 						CStringA sItemInfo;
 						CStringA sItemUrl = CUnicodeUtils::StdGetUTF8((LPCTSTR)pageUrl.Left(pageUrl.ReverseFind('/'))).c_str();
 						CStringA sItemName = "..";
-						sItemInfo.Format("<li><a href=\"%s\">%s</a></li>", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
+						sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td></td><td></td><td></td></tr>\n", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
 						m_sResultPage += sItemInfo;
 						map<CStringA, CStringA> infoMapFiles;
 						map<CStringA, CStringA> infoMapDirs;
@@ -58,11 +62,17 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 								sItemName = sItemUrl.Mid(sItemUrl.ReverseFind('/')+1);
 								if (dirInfo->kind == svn_node_dir)
 									sItemName += "/";
-								sItemInfo.Format("<li><a href=\"%s\">%s</a></li>", (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName));
+								sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n", 
+									(LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
+									dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
 								if (dirInfo->kind == svn_node_dir)
+								{
 									infoMapDirs[sItemUrl] = sItemInfo;
+								}
 								else
+								{
 									infoMapFiles[sItemUrl] = sItemInfo;
+								}
 							}
 						}
 						for (map<CStringA, CStringA>::iterator it = infoMapDirs.begin(); it != infoMapDirs.end(); ++it)
@@ -73,7 +83,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						{
 							m_sResultPage += it->second;
 						}
-						m_sResultPage += "</ul><hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+						m_sResultPage += "</table>\n<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
 
 						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
 						pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
@@ -145,7 +155,6 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						}
 						CreateUrlCacheEntry(szUrl, 0, sExt, cachePath, 0);
 						pIProtSink->ReportProgress(BINDSTATUS_CACHEFILENAMEAVAILABLE, cachePath);
-						//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, m_fileSize);
 						if (!svn.Cat(wstring(szUrl), wstring(cachePath)))
 						{
 							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
@@ -169,7 +178,6 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					else
 					{
 						stream = svn.GetMemoryStream();
-						//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
 						if (!svn.Cat(wstring(szUrl), stream))
 						{
 							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
@@ -282,7 +290,7 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
 		BYTE* pbData = (BYTE*)(LPCSTR)m_sResultPage + m_dwPos;
 		DWORD cbAvail = m_sResultPage.GetLength() - m_dwPos;
 
-		memcpy_s(pv, cb, pbData, cbAvail);
+		memcpy_s(pv, cb, pbData, cbAvail > cb ? cb : cbAvail);
 
 		if (cbAvail > cb)
 		{
