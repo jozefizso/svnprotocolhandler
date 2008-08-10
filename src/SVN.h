@@ -94,8 +94,10 @@ public:
 
 	void SetAuthInfo(const stdstring& username, const stdstring& password);
 
-	bool Cat(stdstring sUrl, svn_stream_t * stream);
+	bool Cat(const wstring& sUrl, const wstring& path);
+	bool Cat(const wstring& sUrl, svn_stream_t * stream);
 	svn_stream_t * GetMemoryStream();
+	svn_stream_t * GetFileStream(const wstring& path);
 
 	/**
 	 * returns the info for the \a path.

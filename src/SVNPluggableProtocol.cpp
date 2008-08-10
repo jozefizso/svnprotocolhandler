@@ -111,20 +111,61 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/plain")));
 					}
 					m_fileSize = info->size;
-					stream = svn.GetMemoryStream();
-					//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, 0);
-					if (!svn.Cat(wstring(szUrl), stream))
+					DWORD bindf = 0;
+					BINDINFO bindinfo = {0};
+					bindinfo.cbSize = sizeof(bindinfo);
+					pIBindInfo->GetBindInfo(&bindf, &bindinfo);
+					if (bindf & BINDF_NEEDFILE)
 					{
-						m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
-						m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-						m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
-						svn_stream_close(stream);
-						stream = NULL;
+						// get a path where we can write the file to
+						TCHAR cachePath[MAX_PATH + 1] = {0};
+						CString sExt;
+						int lastSlash = sUrl.ReverseFind('/');
+						int lastDot = sUrl.ReverseFind('.');
+						if (lastDot > lastSlash)
+						{
+							sExt = sUrl.Mid(lastDot+1);
+						}
+						CreateUrlCacheEntry(szUrl, 0, sExt, cachePath, 0);
+						pIProtSink->ReportProgress(BINDSTATUS_CACHEFILENAMEAVAILABLE, cachePath);
+						//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, m_fileSize);
+						if (!svn.Cat(wstring(szUrl), wstring(cachePath)))
+						{
+							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
+							m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
+							m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+						}
+						//create a null expire and modified time
+						FILETIME ftExpireTime;
+						ftExpireTime.dwHighDateTime = 0;
+						ftExpireTime.dwLowDateTime = 0;
+						FILETIME ftModifiedTime;
+						ftModifiedTime.dwHighDateTime = 0;
+						ftModifiedTime.dwLowDateTime = 0;
+						CommitUrlCacheEntry(szUrl, cachePath, ftExpireTime, ftModifiedTime, 0, NULL, 0, NULL, szUrl);
+						bDownloadFinished = true;
+						ATLTRACE(_T("ReportData: file download finished\n"));
+						stream = svn.GetFileStream(cachePath);
+						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, m_fileSize, m_fileSize);
+						pIProtSink->ReportResult(S_OK, 200, 0);
 					}
-					bDownloadFinished = true;
-					ATLTRACE(_T("ReportData: file download finished\n"));
-					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
-					pIProtSink->ReportResult(S_OK, 200, 0);
+					else
+					{
+						stream = svn.GetMemoryStream();
+						//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
+						if (!svn.Cat(wstring(szUrl), stream))
+						{
+							m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
+							m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
+							m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+							svn_stream_close(stream);
+							stream = NULL;
+						}
+						bDownloadFinished = true;
+						ATLTRACE(_T("ReportData: file download finished\n"));
+						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
+						pIProtSink->ReportResult(S_OK, 200, 0);
+					}
 				}
 			}
 		}

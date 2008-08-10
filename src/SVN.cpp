@@ -252,7 +252,24 @@ svn_stream_t * SVN::GetMemoryStream()
 	return s;
 }
 
-bool SVN::Cat(wstring sUrl, svn_stream_t * stream)
+svn_stream_t * SVN::GetFileStream(const wstring& path)
+{
+	svn_stream_t * stream;
+	apr_file_t * file;
+	apr_status_t status;
+
+	status = apr_file_open(&file, CUnicodeUtils::StdGetANSI(path).c_str(), 
+		APR_READ, APR_OS_DEFAULT, pool);
+	if (status)
+	{
+		Err = svn_error_wrap_apr(status, NULL);
+		return NULL;
+	}
+	stream = svn_stream_from_aprfile(file, pool);
+	return stream;
+}
+
+bool SVN::Cat(const wstring& sUrl, svn_stream_t * stream)
 {
 	svn_error_clear(Err);
 	m_bCanceled = false;
@@ -265,6 +282,41 @@ bool SVN::Cat(wstring sUrl, svn_stream_t * stream)
 	const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
 	Err = svn_client_cat2(stream, urla, 
 		&pegrev, &rev, m_pctx, localpool);
+
+	return (Err == NULL);
+}
+
+bool SVN::Cat(const wstring& sUrl, const stdstring& path)
+{
+	svn_error_clear(Err);
+	m_bCanceled = false;
+	// we always use the HEAD revision to fetch a file
+	apr_file_t * file;
+	svn_stream_t * stream;
+	apr_status_t status;
+	SVNPool localpool(pool);
+
+	// if the file already exists, delete it before recreating it
+	::DeleteFile(path.c_str());
+
+	status = apr_file_open(&file, CUnicodeUtils::StdGetANSI(path).c_str(), 
+		APR_WRITE | APR_CREATE | APR_TRUNCATE, APR_OS_DEFAULT, localpool);
+	if (status)
+	{
+		Err = svn_error_wrap_apr(status, NULL);
+		return false;
+	}
+	stream = svn_stream_from_aprfile(file, localpool);
+
+	svn_opt_revision_t pegrev, rev;
+	pegrev.kind = svn_opt_revision_head;
+	rev.kind = svn_opt_revision_head;
+
+	const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
+	Err = svn_client_cat2(stream, urla, 
+		&pegrev, &rev, m_pctx, localpool);
+
+	apr_file_close(file);
 
 	return (Err == NULL);
 }
