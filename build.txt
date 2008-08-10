@@ -79,4 +79,20 @@ Now you're almost ready. Only a few more steps to do:
   which will create a build log file which you can use to analyse where
   exactly the build failed.
 
+\section Debugging Debugging
+
+When debugging, make sure that the debug dll is properly registered.
+You can call
+\verbatim
+ > regsvr32 /i path/to/dll
+\endverbatim
+to register the dll manually.
+
+On pre-Vista OS, you can simply start the debugger with the iexplore.exe.
+On vista however, the IE spawns a child process ieuser.exe which runs
+with lower privileges and does the real work. That means you have to
+configure your debugger to attach to the iexplorer.exe process, run it
+and then attach to the ieuser.exe process. Then you can set breakpoints
+in the dll code.
+
 */
