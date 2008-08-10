@@ -18,6 +18,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 	if (sUrl.Left(6).CompareNoCase(_T("svn://")) == 0)
 	{
 		m_dwPos = 0;
+		bDownloadFinished = false;
 		stream = NULL;
 		CAtlString strURL(sUrl);
 		pIProtSink->ReportProgress(BINDSTATUS_FINDINGRESOURCE, strURL);
@@ -59,12 +60,16 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 
 						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
 						pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
+						pIProtSink->ReportResult(S_OK, 0, NULL);
 					}
 					else
 					{
 						m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
 						m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
 						m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
+						pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
+						pIProtSink->ReportResult(S_OK, 0, NULL);
 					}
 				}
 				else
@@ -72,6 +77,9 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
 					m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
 					m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
+					pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
+					pIProtSink->ReportResult(S_OK, 0, NULL);
 				}
 			}
 			else if (info->kind == svn_node_file)
@@ -85,6 +93,9 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
 					m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
 					m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
+					pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
+					pIProtSink->ReportResult(S_OK, 0, NULL);
 				}
 				else
 				{
@@ -101,8 +112,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					}
 					m_fileSize = info->size;
 					stream = svn.GetMemoryStream();
-					bDownloadFinished = false;
-					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_fileSize);
+					//pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, 0);
 					if (!svn.Cat(wstring(szUrl), stream))
 					{
 						m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
@@ -113,7 +123,8 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 					}
 					bDownloadFinished = true;
 					ATLTRACE(_T("ReportData: file download finished\n"));
-					pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_fileSize, m_fileSize);
+					pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, 0, 0);
+					pIProtSink->ReportResult(S_OK, 200, 0);
 				}
 			}
 		}
@@ -182,25 +193,25 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
 		apr_size_t size = m_fileSize - m_dwPos;
 		if (m_fileSize < m_dwPos)
 			size = 4096;
+		if (size == 0)
+			size = 4096;
 		if (size > cb)
 			size = cb;
 		if (svn_stream_read(stream, (char *)pv, &size))
 		{
 			return INET_E_DOWNLOAD_FAILURE;
 		}
-		if (size < cb)
+		if ((size == 0)&&(bDownloadFinished))
 		{
-			if ((size == 0)&&(bDownloadFinished))
+			if (stream)
 			{
-				if (stream)
-				{
-					svn_stream_close(stream);
-					stream = NULL;
-				}
-				return S_FALSE;
+				svn_stream_close(stream);
+				stream = NULL;
 			}
-			//hr = E_PENDING;
+			return S_FALSE;
 		}
+		else if (size == 0)
+			hr = E_PENDING;
 		*pcbRead = size;
 		m_dwPos += size;
 		ATLTRACE(_T("READ  - delivered=%8d\n"), size);
