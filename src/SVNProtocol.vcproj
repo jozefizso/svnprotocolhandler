@@ -216,6 +216,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AuthDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Registry.cpp"
 				>
 			</File>
@@ -275,6 +283,14 @@
 			>
 			<File
 				RelativePath=".\AppUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AuthDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseDialog.h"
 				>
 			</File>
 			<File

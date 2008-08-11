@@ -6,6 +6,9 @@
 #include "SVNProtocol.h"
 #include "svn_dso.h"
 
+#pragma comment(linker, "\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
+HINSTANCE g_hInstance;
 
 class CSVNProtocolModule : public CAtlDllModuleT< CSVNProtocolModule >
 {
@@ -24,7 +27,7 @@ CSVNProtocolModule _AtlModule;
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	hInstance;
+	g_hInstance = hInstance;
 	switch (dwReason)
 	{
 	case DLL_PROCESS_ATTACH:

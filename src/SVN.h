@@ -157,13 +157,19 @@ private:
 	static svn_error_t *		cancel(void *baton);
 	static svn_error_t *		infoReceiver(void* baton, const char * path, 
 											const svn_info_t* info, apr_pool_t * pool);
-	static svn_error_t*			sslserverprompt(svn_auth_cred_ssl_server_trust_t **cred_p, 
+	static svn_error_t *		sslserverprompt(svn_auth_cred_ssl_server_trust_t **cred_p, 
 											void *baton, const char *realm, 
 											apr_uint32_t failures, 
 											const svn_auth_ssl_server_cert_info_t *cert_info, 
 											svn_boolean_t may_save, apr_pool_t *pool);
 	static void					progress_func(apr_off_t progress, apr_off_t total, 
 											void *baton, apr_pool_t *pool);
+	static svn_error_t *		userprompt(svn_auth_cred_username_t **cred, void *baton, 
+											const char *realm, svn_boolean_t may_save, 
+											apr_pool_t *pool);
+	static svn_error_t *		simpleprompt(svn_auth_cred_simple_t **cred, void *baton, 
+											const char *realm, const char *username, 
+											svn_boolean_t may_save, apr_pool_t *pool);
 
 };
 
