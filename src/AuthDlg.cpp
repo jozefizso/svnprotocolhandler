@@ -68,7 +68,6 @@ LRESULT CAuthDialog::DoCommand(int id)
 			password = buf;
 			GetDlgItemText(*this, IDC_USERNAME, buf, 4096);
 			username = buf;
-			saveAuth = (IsDlgButtonChecked(*this, IDC_SAVEAUTH) == BST_CHECKED);
 			EndDialog(*this, id);
 		}
 		break;

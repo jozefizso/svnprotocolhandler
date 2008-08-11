@@ -33,7 +33,20 @@ static char THIS_FILE[] = __FILE__;
 extern HINSTANCE g_hInstance;
 
 SVN::SVN(void)
+	: bCreated(false)
 {
+}
+
+SVN::~SVN(void)
+{
+	svn_error_clear(Err);
+	svn_pool_destroy (parentpool);
+}
+
+void SVN::Create()
+{
+	if (bCreated)
+		return;
 	parentpool = svn_pool_create(NULL);
 	svn_error_clear(svn_client_create_context(&m_pctx, parentpool));
 
@@ -131,12 +144,7 @@ SVN::SVN(void)
 		svn_config_set(cfg, SVN_CONFIG_SECTION_TUNNELS, "ssh", CUnicodeUtils::StdGetUTF8((LPCTSTR)tsvn_ssh).c_str());
 	}
 	m_bCanceled = false;
-}
-
-SVN::~SVN(void)
-{
-	svn_error_clear(Err);
-	svn_pool_destroy (parentpool);
+	bCreated = true;
 }
 
 svn_error_t* SVN::cancel(void *baton)
@@ -537,16 +545,15 @@ void SVN::progress_func(apr_off_t progress, apr_off_t total, void *baton, apr_po
 	return;
 }
 
-svn_error_t* SVN::userprompt(svn_auth_cred_username_t **cred, void *baton, const char * realm, svn_boolean_t /*may_save*/, apr_pool_t *pool)
+svn_error_t* SVN::userprompt(svn_auth_cred_username_t **cred, void * /*baton*/, const char * realm, svn_boolean_t /*may_save*/, apr_pool_t *pool)
 {
-	SVN * svn = (SVN *)baton;
 	svn_auth_cred_username_t *ret = (svn_auth_cred_username_t *)apr_pcalloc (pool, sizeof (*ret));
 	CAuthDialog dlg(NULL);
 	dlg.realm = CUnicodeUtils::StdGetUnicode(realm);
 	if (dlg.DoModal(g_hInstance, IDD_AUTHDLG, NULL) == IDOK)
 	{
 		ret->username = apr_pstrdup(pool, CUnicodeUtils::StdGetUTF8(dlg.username).c_str());
-		ret->may_save = dlg.saveAuth;
+		ret->may_save = false;
 		*cred = ret;
 	}
 	else
@@ -554,9 +561,8 @@ svn_error_t* SVN::userprompt(svn_auth_cred_username_t **cred, void *baton, const
 	return SVN_NO_ERROR;
 }
 
-svn_error_t* SVN::simpleprompt(svn_auth_cred_simple_t **cred, void *baton, const char * realm, const char *username, svn_boolean_t /*may_save*/, apr_pool_t *pool)
+svn_error_t* SVN::simpleprompt(svn_auth_cred_simple_t **cred, void * /*baton*/, const char * realm, const char *username, svn_boolean_t /*may_save*/, apr_pool_t *pool)
 {
-	SVN * svn = (SVN *)baton;
 	svn_auth_cred_simple_t *ret = (svn_auth_cred_simple_t *)apr_pcalloc (pool, sizeof (*ret));
 	CAuthDialog dlg(NULL);
 	dlg.username = CUnicodeUtils::StdGetUnicode(username);
@@ -565,7 +571,7 @@ svn_error_t* SVN::simpleprompt(svn_auth_cred_simple_t **cred, void *baton, const
 	{
 		ret->username = apr_pstrdup(pool, CUnicodeUtils::StdGetUTF8(dlg.username).c_str());
 		ret->password = apr_pstrdup(pool, CUnicodeUtils::StdGetUTF8(dlg.password).c_str());
-		ret->may_save = dlg.saveAuth;
+		ret->may_save = false;
 		*cred = ret;
 	}
 	else

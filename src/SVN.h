@@ -91,6 +91,7 @@ class SVN
 public:
 	SVN(void);
 	~SVN(void);
+	void Create();
 
 	void SetAuthInfo(const stdstring& username, const stdstring& password);
 
@@ -134,6 +135,7 @@ public:
 	bool						m_bCanceled;
 	svn_error_t *				Err;			///< Global error object struct
 private:
+	bool						bCreated;
 	apr_pool_t *				parentpool;		///< the main memory pool
 	apr_pool_t *				pool;			///< 'root' memory pool
 	svn_client_ctx_t * 			m_pctx;			///< pointer to client context

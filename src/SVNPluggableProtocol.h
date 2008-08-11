@@ -6,6 +6,7 @@
 
 #include "SVNProtocol.h"
 
+SVN svn;
 
 // CSVNPluggableProtocol
 
@@ -78,7 +79,6 @@ private:
 	CComPtr<IInternetProtocolSink> m_spSink;
 	CComPtr<IInternetBindInfo> m_spBindInfo;
 	DWORD m_dwPos;
-	SVN svn;
 	CStringA m_sResultPage;
 	svn_stream_t * stream;
 	apr_size_t m_fileSize;
