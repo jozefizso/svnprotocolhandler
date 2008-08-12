@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
+	<Product
+	UpgradeCode="3266C2C2-16A6-49aa-812A-813534EF115B"
+	Name='SVNProtocolHandler'
+	Id='????????-????-????-????-????????????'
+	Language='1031'
+	Codepage='1252'
+	Version='1.5.0'
+	Manufacturer='TortoiseSVN.net'>
+
+		<Package Id='????????-????-????-????-????????????' Keywords='Installer'
+		  Description="SVNProtocolHandler"
+		  Comments='http://tortoisesvn.net' Manufacturer='TortoiseSVN'
+		  InstallerVersion='200' Languages='1031' Compressed='yes' SummaryCodepage='1252' />
+
+		<Upgrade Id="3266C2C2-16A6-49aa-812A-813534EF115B" >
+			<!-- flag is set if the install will trigger an upgrade of an existing install -->
+			<UpgradeVersion Property="PREVIOUSVERSIONSINSTALLED" Maximum="1.1.0" IncludeMaximum="no" />
+		</Upgrade>
+
+		<Media Id='1' Cabinet='SVNPH.cab' EmbedCab='yes' />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+		<Condition Message='This application only runs on Windows 2000 and later.'>VersionNT &gt;= 500</Condition>
+
+		<Directory Id='TARGETDIR' Name='SourceDir'>
+			<Directory Id='ProgramFilesFolder' Name='PFiles'>
+				<Directory Id='INSTALLDIR' Name='SVNProt' LongName='SVNProtocolHandler'>
+
+					<Component Id='MainDll' Guid='056C75E8-DF5C-4a6e-B37B-7317D4C3E1C3'>
+						<File Id='SVNProtocol.DLL' Name='SVNProt.dll' LongName='SVNProtocol.dll' DiskId='1'
+						  Source='bin/release/SVNProtocol.dll' Vital='yes'>
+						</File>
+						<Registry Root="HKCR" Key="AppID\SVNProtocol.DLL" Name="AppID" Value="{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Type="string" />
+						<Registry Root="HKCR" Key="AppID\{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Value="SVNProtocol" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Value="SVN Pluggable Protocol" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Name="AppID" Value="{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}\InprocServer32" Value="[INSTALLDIR]\SVNProtocol.dll" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}\InprocServer32" Name="ThreadingModel" Value="Apartment" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}\ProgID" Value="SVNProtocol.PluggableProtocol.1" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}\TypeLib" Value="{75C230D1-EFFC-479d-9B61-56A29AF778CA}" Type="string" />
+						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}\VersionIndependentProgID" Value="SVNProtocol.PluggableProtocol" Type="string" />
+						<Registry Root="HKCR" Key="PROTOCOLS\Handler\svn" Value="svn: pluggable protocol" Type="string" />
+						<Registry Root="HKCR" Key="PROTOCOLS\Handler\svn" Name="CLSID" Value="{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Type="string" />
+						<Registry Root="HKCR" Key="SVNProtocol.PluggableProtocol" Value="SVN Pluggable Protocol" Type="string" />
+						<Registry Root="HKCR" Key="SVNProtocol.PluggableProtocol\CLSID" Value="{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Type="string" />
+						<Registry Root="HKCR" Key="SVNProtocol.PluggableProtocol\CurVer" Value="SVNProtocol.PluggableProtocol.1" Type="string" />
+						<Registry Root="HKCR" Key="SVNProtocol.PluggableProtocol.1" Value="SVN Pluggable Protocol" Type="string" />
+						<Registry Root="HKCR" Key="SVNProtocol.PluggableProtocol.1\CLSID" Value="{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Type="string" />
+						<Registry Root="HKLM" Key="Software\Classes\Interface" />
+						<Registry Root="HKLM" Key="Software\Classes\TypeLib\{75C230D1-EFFC-479D-9B61-56A29AF778CA}\1.0" Value="SVNProtocol 1.0 Type Library" Type="string" />
+						<Registry Root="HKLM" Key="Software\Classes\TypeLib\{75C230D1-EFFC-479D-9B61-56A29AF778CA}\1.0\0\win32" Value="[INSTALLDIR]SVNProtocol.dll" Type="string" />
+						<Registry Root="HKLM" Key="Software\Classes\TypeLib\{75C230D1-EFFC-479D-9B61-56A29AF778CA}\1.0\FLAGS" Value="0" Type="string" />
+					</Component>
+
+				</Directory>
+			</Directory>
+
+		</Directory>
+
+		<Feature Id='Complete' Title='SVNProtocolHandler' Description='The complete package.'
+		  Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+			<Feature Id='MainDll' Title='Program' Description='The main dll.' Level='1'>
+				<ComponentRef Id='MainDll' />
+			</Feature>
+		</Feature>
+
+		<UIRef Id="WixUI_Custom" />
+		<UIRef Id="WixUI_ErrorProgressText" />
+
+		<InstallExecuteSequence>
+			<AppSearch Sequence="1"></AppSearch>
+			<LaunchConditions After="AppSearch" />
+			<RemoveExistingProducts After="InstallValidate"><![CDATA[PREVIOUSVERSIONSINSTALLED]]></RemoveExistingProducts>
+		</InstallExecuteSequence>
+
+	</Product>
+</Wix>
