@@ -28,9 +28,13 @@
 				<Directory Id='INSTALLDIR' Name='SVNProt' LongName='SVNProtocolHandler'>
 
 					<Component Id='MainDll' Guid='056C75E8-DF5C-4a6e-B37B-7317D4C3E1C3'>
-						<File Id='SVNProtocol.DLL' Name='SVNProt.dll' LongName='SVNProtocol.dll' DiskId='1'
-						  Source='bin/release/SVNProtocol.dll' Vital='yes'>
-						</File>
+						<File Id='SVNProtocol.DLL' Name='SVNProt.dll' LongName='SVNProtocol.dll' DiskId='1' Source='bin/release/SVNProtocol.dll' Vital='yes' />
+						<File Id="saslANON" Name='ANON.DLL' LongName='saslANONYMOUS.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslANONYMOUS.dll' Vital='yes' />
+						<File Id="saslCRAMMD5" Name='CRAMMD5.DLL' LongName='saslCRAMMD5.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslCRAMMD5.dll' Vital='yes' />
+						<File Id="saslDIGEST" Name='DIGEST.DLL' LongName='saslDIGESTMD5.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslDIGESTMD5.dll' Vital='yes' />
+						<File Id="saslLOGIN" Name='LOGIN.DLL' LongName='saslLOGIN.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslLOGIN.dll' Vital='yes' />
+						<File Id="saslNTLM" Name='NTLM.DLL' LongName='saslNTLM.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslNTLM.dll' Vital='yes' />
+						<File Id="saslPLAIN" Name='PLAIN.DLL' LongName='saslPLAIN.dll' DiskId='1' Source='ext\cyrus-SASL\precompiled modules\saslPLAIN.dll' Vital='yes' />
 						<Registry Root="HKCR" Key="AppID\SVNProtocol.DLL" Name="AppID" Value="{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Type="string" />
 						<Registry Root="HKCR" Key="AppID\{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Value="SVNProtocol" Type="string" />
 						<Registry Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Value="SVN Pluggable Protocol" Type="string" />
