@@ -31,7 +31,8 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 {
 	HRESULT hr = S_OK;
 	CString sUrl = szUrl;
-	if (sUrl.Left(6).CompareNoCase(_T("svn://")) == 0)
+
+    if (sUrl.Left(6).CompareNoCase(_T("svn://")) == 0)
 	{
 		svn.Create();
 		m_dwPos = 0;
@@ -79,15 +80,18 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 								sItemName = sItemUrl.Mid(sItemUrl.ReverseFind('/')+1);
 								if (dirInfo->kind == svn_node_dir)
 									sItemName += "/";
-								sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n", 
-									(LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
-									dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
 								if (dirInfo->kind == svn_node_dir)
 								{
+                                    sItemInfo.Format("<tr><td><a href=\"%s\"><b>%s</b></a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n", 
+                                        (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
+                                        dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
 									infoMapDirs[sItemUrl] = sItemInfo;
 								}
 								else
 								{
+                                    sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n", 
+                                        (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
+                                        dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
 									infoMapFiles[sItemUrl] = sItemInfo;
 								}
 							}
@@ -100,7 +104,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						{
 							m_sResultPage += it->second;
 						}
-						m_sResultPage += "</table>\n<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+						m_sResultPage += "</table>\n<hr noshade><em>svn protocol handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
 
 						pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
 						pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());

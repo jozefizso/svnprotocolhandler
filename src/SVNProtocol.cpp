@@ -19,7 +19,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "SVNProtocol.h"
-#include "svn_dso.h"
 
 #pragma comment(linker, "\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
@@ -46,11 +45,8 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 	switch (dwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		apr_initialize();
-		svn_dso_initialize();
 		break;
 	case DLL_PROCESS_DETACH:
-		apr_terminate();
 		break;
 	}
     return _AtlModule.DllMain(dwReason, lpReserved); 

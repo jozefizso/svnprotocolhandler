@@ -31,6 +31,9 @@
 #include "svn_subst.h"
 #include "svn_repos.h"
 #include "svn_time.h"
+#include "svn_dso.h"
+#define STRUCT_IOVEC_DEFINED
+#include "..\ext\cyrus-SASL\include\sasl.h"
 
 #include "SVNPool.h"
 #include "UnicodeUtils.h"

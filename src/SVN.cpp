@@ -41,13 +41,32 @@ SVN::~SVN(void)
 {
 	svn_error_clear(Err);
 	svn_pool_destroy (parentpool);
+    sasl_done();
+    apr_terminate();
 }
 
 void SVN::Create()
 {
 	if (bCreated)
 		return;
-	parentpool = svn_pool_create(NULL);
+    apr_initialize();
+    svn_dso_initialize();
+
+    // to avoid that SASL will look for and load its plugin dlls all around the
+    // system, we set the path here.
+    // Note that SASL doesn't have to be initialized yet for this to work
+    char buf[MAX_PATH] = {0};
+    if (GetModuleFileNameA(g_hInstance, buf, MAX_PATH))
+    {
+        char * pSlash = strrchr(buf, '\\');
+        if (pSlash)
+        {
+            *pSlash = 0;
+            sasl_set_path(SASL_PATH_TYPE_PLUGIN, buf);
+        }
+    }
+    
+    parentpool = svn_pool_create(NULL);
 	svn_error_clear(svn_client_create_context(&m_pctx, parentpool));
 
 	Err = svn_config_ensure(NULL, parentpool);
