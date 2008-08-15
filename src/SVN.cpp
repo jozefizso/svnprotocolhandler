@@ -34,14 +34,18 @@ extern HINSTANCE g_hInstance;
 
 SVN::SVN(void)
 	: bCreated(false)
+	, parentpool(NULL)
 {
 }
 
 SVN::~SVN(void)
 {
+	sasl_done();
+	if (!bCreated)
+		return;
 	svn_error_clear(Err);
-	svn_pool_destroy (parentpool);
-    sasl_done();
+	if (parentpool)
+		svn_pool_destroy (parentpool);
     apr_terminate();
 }
 
