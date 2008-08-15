@@ -111,7 +111,7 @@
 		<property name="machineoption" value="/MACHINE:x64" if="${platform == 'x64'}" />
 		<lib 
 			output="${configuration}_${platform}\libapr.lib" 
-			options='/NOLOGO /DEBUG /PDB:".\${configuration}_${platform}/libapr.pdb" /SUBSYSTEM:WINDOWS"'>
+			options='/NOLOGO ${machineoption} /SUBSYSTEM:WINDOWS"'>
 			<sources>
 				<include name="${configuration}_${platform}\*.obj" />
 			</sources>

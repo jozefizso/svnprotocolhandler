@@ -65,7 +65,7 @@ public:
             IInternetProtocolSink *pIProtSink,
             IInternetBindInfo *pIBindInfo,
             DWORD grfSTI,
-            DWORD dwReserved);
+            HANDLE_PTR dwReserved);
     STDMETHOD(Continue)(PROTOCOLDATA *pStateInfo);
     STDMETHOD(Abort)(HRESULT hrReason,DWORD dwOptions);
     STDMETHOD(Terminate)(DWORD dwOptions);

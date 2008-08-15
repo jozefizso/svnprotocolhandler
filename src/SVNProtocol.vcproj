@@ -12,6 +12,9 @@
 		<Platform
 			Name="Win32"
 		/>
+		<Platform
+			Name="x64"
+		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -85,6 +88,97 @@
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			OutputDirectory="..\bin\$(ConfigurationName)$(PlatformName)"
+			IntermediateDirectory="..\obj\$(ConfigurationName)$(PlatformName)"
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="false"
+				TargetEnvironment="3"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(IntDir)/SVNProtocol.tlb"
+				HeaderFileName="SVNProtocol.h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="SVNProtocol_i.c"
+				ProxyFileName="SVNProtocol_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="..\ext\apr\include;&quot;..\ext\apr-util\include&quot;;..\ext\Subversion\subversion\include"
+				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;_USRDLL;APR_DECLARE_STATIC;APU_DECLARE_STATIC;STATIC_BUILD"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="2"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib ..\ext\apr\debug_x64\libapr.lib ..\ext\apr-util\debug_x64\libaprutil.lib ..\ext\apr-util\xml\expat\lib\debug_x64\xml.lib ..\ext\Subversion\debug_x64\libsvn_client.lib ..\ext\Subversion\debug_x64\libsvn_delta.lib ..\ext\Subversion\debug_x64\libsvn_diff.lib ..\ext\Subversion\debug_x64\libsvn_ra.lib ..\ext\Subversion\debug_x64\libsvn_ra_svn.lib ..\ext\Subversion\debug_x64\libsvn_subr.lib ..\ext\Subversion\debug_x64\libsvn_wc.lib ..\ext\cyrus-SASL\debug_x64\libsasls.lib"
+				LinkIncremental="2"
+				ModuleDefinitionFile=".\SVNProtocol.def"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -202,6 +296,99 @@
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			OutputDirectory="..\bin\$(ConfigurationName)$(PlatformName)"
+			IntermediateDirectory="..\obj\$(ConfigurationName)$(PlatformName)"
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="false"
+				TargetEnvironment="3"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(IntDir)/SVNProtocol.tlb"
+				HeaderFileName="SVNProtocol.h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="SVNProtocol_i.c"
+				ProxyFileName="SVNProtocol_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\ext\apr\include;&quot;..\ext\apr-util\include&quot;;..\ext\Subversion\subversion\include"
+				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG;_USRDLL;APR_DECLARE_STATIC;APU_DECLARE_STATIC;STATIC_BUILD"
+				RuntimeLibrary="0"
+				UsePrecompiledHeader="2"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib ..\ext\apr\release_x64\libapr.lib ..\ext\apr-util\release_x64\libaprutil.lib ..\ext\apr-util\xml\expat\lib\release_x64\xml.lib ..\ext\Subversion\release_x64\libsvn_client.lib ..\ext\Subversion\release_x64\libsvn_delta.lib ..\ext\Subversion\release_x64\libsvn_diff.lib ..\ext\Subversion\release_x64\libsvn_ra.lib ..\ext\Subversion\release_x64\libsvn_ra_svn.lib ..\ext\Subversion\release_x64\libsvn_subr.lib ..\ext\Subversion\release_x64\libsvn_wc.lib ..\ext\cyrus-SASL\release_x64\libsasls.lib"
+				LinkIncremental="1"
+				ModuleDefinitionFile=".\SVNProtocol.def"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="2"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -239,7 +426,23 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -360,7 +563,23 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

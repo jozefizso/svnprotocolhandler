@@ -27,7 +27,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 	IInternetProtocolSink *pIProtSink,
 	IInternetBindInfo *pIBindInfo,
 	DWORD grfSTI,
-	DWORD /*dwReserved*/)
+	HANDLE_PTR /*dwReserved*/)
 {
 	HRESULT hr = S_OK;
 	CString sUrl = szUrl;
