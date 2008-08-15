@@ -31,6 +31,10 @@ HKCR
 			{
 				val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
 			}
+			ForceRemove svn+ssh = s 'svn+ssh: pluggable protocol'
+			{
+				val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
+			}
 		}
 	}
 }

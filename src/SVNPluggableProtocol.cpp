@@ -32,7 +32,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 	HRESULT hr = S_OK;
 	CString sUrl = szUrl;
 
-    if (sUrl.Left(6).CompareNoCase(_T("svn://")) == 0)
+    if ((sUrl.Left(6).CompareNoCase(_T("svn://")) == 0)||(sUrl.Left(10).CompareNoCase(_T("svn+ssh://")) == 0))
 	{
 		svn.Create();
 		m_dwPos = 0;
