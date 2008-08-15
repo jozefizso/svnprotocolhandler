@@ -83,6 +83,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 									sItemName += "/";
 								if (dirInfo->kind == svn_node_dir)
 								{
+									// folders shown in bold
                                     sItemInfo.Format("<tr><td><a href=\"%s\"><b>%s</b></a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n", 
                                         (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
                                         dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
@@ -264,6 +265,7 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
 
 	if (stream)
 	{
+		// provide the content from a file stream
 		if ((bDownloadFinished)&&(stream == NULL))
 		{
 			return S_FALSE;
@@ -296,6 +298,7 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
 	}
 	else
 	{
+		// provide the content from a string
 		if (m_dwPos >= (DWORD)m_sResultPage.GetLength())
 			return S_FALSE;
 
@@ -366,7 +369,7 @@ void CSVNPluggableProtocol::CreateErrorPage(IInternetProtocolSink *pIProtSink)
 {
 	m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
 	m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-	m_sResultPage += "<hr noshade><em>Powered by <a href=\"http://subversion.tigris.org/\">Subversion</a>.</em></body></html>";
+	m_sResultPage += "<hr noshade><em>svn protocol handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
 	pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
 	pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
 	pIProtSink->ReportResult(S_OK, 0, NULL);

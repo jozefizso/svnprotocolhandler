@@ -265,20 +265,6 @@ wstring SVN::GetLastErrorMsg()
 	return msg;
 }
 
-void SVN::SetAuthInfo(const wstring& username, const wstring& password)
-{
-	if (m_pctx)
-	{
-		if (!username.empty())
-		{
-			svn_auth_set_parameter(m_pctx->auth_baton, 
-				SVN_AUTH_PARAM_DEFAULT_USERNAME, apr_pstrdup(parentpool, CUnicodeUtils::StdGetUTF8(username).c_str()));
-			svn_auth_set_parameter(m_pctx->auth_baton, 
-				SVN_AUTH_PARAM_DEFAULT_PASSWORD, apr_pstrdup(parentpool, CUnicodeUtils::StdGetUTF8(password).c_str()));
-		}
-	}
-}
-
 svn_stream_t * SVN::GetMemoryStream()
 {
 	svn_stringbuf_t * str = svn_stringbuf_create("", pool);

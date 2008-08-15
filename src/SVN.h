@@ -96,8 +96,6 @@ public:
 	~SVN(void);
 	void Create();
 
-	void SetAuthInfo(const stdstring& username, const stdstring& password);
-
 	bool Cat(const wstring& sUrl, const wstring& path);
 	bool Cat(const wstring& sUrl, svn_stream_t * stream);
 	svn_stream_t * GetMemoryStream();

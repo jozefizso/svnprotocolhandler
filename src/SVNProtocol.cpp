@@ -34,10 +34,6 @@ public :
 CSVNProtocolModule _AtlModule;
 
 
-#ifdef _MANAGED
-#pragma managed(push, off)
-#endif
-
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
@@ -51,10 +47,6 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 	}
     return _AtlModule.DllMain(dwReason, lpReserved); 
 }
-
-#ifdef _MANAGED
-#pragma managed(pop)
-#endif
 
 
 
