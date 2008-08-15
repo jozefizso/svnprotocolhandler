@@ -67,7 +67,8 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 						CStringA sItemUrl = CUnicodeUtils::StdGetUTF8((LPCTSTR)pageUrl.Left(pageUrl.ReverseFind('/'))).c_str();
 						CStringA sItemName = "..";
 						sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td></td><td></td><td></td></tr>\n", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
-						m_sResultPage += sItemInfo;
+						if (sUrl.Compare(dirInfo->reposRoot.c_str()))
+							m_sResultPage += sItemInfo;
 						map<CStringA, CStringA> infoMapFiles;
 						map<CStringA, CStringA> infoMapDirs;
 						pageUrl.TrimRight('/');
