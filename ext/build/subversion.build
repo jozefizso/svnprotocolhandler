@@ -39,6 +39,8 @@
 					<exclude name="subversion\libsvn_ra_neon" />
 					<exclude name="subversion\libsvn_ra_serf" />
 					<exclude name="subversion\libsvn_fs*" />
+					<exclude name="subversion\libsvn_auth_gnome_keyring" />
+					<exclude name="subversion\libsvn_auth_kwallet" />
 				</items>
 			</in>
 			<do>
@@ -74,6 +76,7 @@
 						<include name="..\apr-util\xml\expat\lib" />
 						<include name="..\zlib" />
 						<include name="..\cyrus-sasl\include" />
+						<include name="..\sqlite" />
 					</includedirs>
 					<defines>
 						<define name="APR_DECLARE_STATIC" />

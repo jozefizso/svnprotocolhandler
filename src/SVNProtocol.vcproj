@@ -80,7 +80,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib ..\ext\apr\debug_win32\libapr.lib ..\ext\apr-util\debug_win32\libaprutil.lib ..\ext\apr-util\xml\expat\lib\debug_win32\xml.lib ..\ext\Subversion\debug_win32\libsvn_client.lib ..\ext\Subversion\debug_win32\libsvn_delta.lib ..\ext\Subversion\debug_win32\libsvn_diff.lib ..\ext\Subversion\debug_win32\libsvn_ra.lib ..\ext\Subversion\debug_win32\libsvn_ra_svn.lib ..\ext\Subversion\debug_win32\libsvn_subr.lib ..\ext\Subversion\debug_win32\libsvn_wc.lib ..\ext\cyrus-SASL\debug_win32\libsasls.lib"
+				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib Secur32.lib Crypt32.lib ..\ext\apr\debug_win32\libapr.lib ..\ext\apr-util\debug_win32\libaprutil.lib ..\ext\apr-util\xml\expat\lib\debug_win32\xml.lib ..\ext\Subversion\debug_win32\libsvn_client.lib ..\ext\Subversion\debug_win32\libsvn_delta.lib ..\ext\Subversion\debug_win32\libsvn_diff.lib ..\ext\Subversion\debug_win32\libsvn_ra.lib ..\ext\Subversion\debug_win32\libsvn_ra_svn.lib ..\ext\Subversion\debug_win32\libsvn_subr.lib ..\ext\Subversion\debug_win32\libsvn_wc.lib ..\ext\cyrus-SASL\debug_win32\libsasls.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\SVNProtocol.def"
 				GenerateDebugInformation="true"
@@ -263,7 +263,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib ..\ext\apr\release_win32\libapr.lib ..\ext\apr-util\release_win32\libaprutil.lib ..\ext\apr-util\xml\expat\lib\release_win32\xml.lib ..\ext\Subversion\release_win32\libsvn_client.lib ..\ext\Subversion\release_win32\libsvn_delta.lib ..\ext\Subversion\release_win32\libsvn_diff.lib ..\ext\Subversion\release_win32\libsvn_ra.lib ..\ext\Subversion\release_win32\libsvn_ra_svn.lib ..\ext\Subversion\release_win32\libsvn_subr.lib ..\ext\Subversion\release_win32\libsvn_wc.lib ..\ext\cyrus-SASL\release_win32\libsasls.lib"
+				AdditionalDependencies="urlmon.lib Wininet.lib Ws2_32.lib Mswsock.lib Rpcrt4.lib Imm32.lib Secur32.lib Crypt32.lib ..\ext\apr\release_win32\libapr.lib ..\ext\apr-util\release_win32\libaprutil.lib ..\ext\apr-util\xml\expat\lib\release_win32\xml.lib ..\ext\Subversion\release_win32\libsvn_client.lib ..\ext\Subversion\release_win32\libsvn_delta.lib ..\ext\Subversion\release_win32\libsvn_diff.lib ..\ext\Subversion\release_win32\libsvn_ra.lib ..\ext\Subversion\release_win32\libsvn_ra_svn.lib ..\ext\Subversion\release_win32\libsvn_subr.lib ..\ext\Subversion\release_win32\libsvn_wc.lib ..\ext\cyrus-SASL\release_win32\libsasls.lib"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\SVNProtocol.def"
 				GenerateDebugInformation="true"
