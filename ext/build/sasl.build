@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <project name="sasl" default="build" basedir="..\cyrus-sasl">
 
-<!-- ====================================================================== -->
-<!-- Project targets														-->
-<!-- ====================================================================== -->
+	<!-- ====================================================================== -->
+	<!-- Project targets														-->
+	<!-- ====================================================================== -->
 	<target name="rebuild" depends="clean,build" />
-	
+
 	<target name="clean">
 		<description>
 			Cleans previous built files.
 		</description>
-		
+
 		<delete>
 			<fileset>
 				<include name="${configuration}_${platform}\**" />
@@ -89,14 +89,14 @@
 		<property name="machineoption" value="/MACHINE:X86" if="${platform == 'win32'}"  />
 		<property name="machineoption" value="/MACHINE:x64" if="${platform == 'x64'}" />
 
-		<lib 
-			output="${configuration}_${platform}\libsasls.lib" 
+		<lib
+			output="${configuration}_${platform}\libsasls.lib"
 			options='/NOLOGO /SUBSYSTEM:WINDOWS ${machineoption}'>
 			<sources>
 				<include name="${configuration}_${platform}\*.obj" />
 			</sources>
 		</lib>
-		
+
 		<delete>
 			<fileset>
 				<include name="${configuration}_${platform}\*.obj" />
