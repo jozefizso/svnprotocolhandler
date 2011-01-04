@@ -35,7 +35,7 @@ BEGIN
             VALUE "FileDescription", "svn protocol handler"
             VALUE "FileVersion", STRFILEVER
             VALUE "InternalName", "SVNProtocol.dll"
-            VALUE "LegalCopyright", "Copyright (C) 2008"
+            VALUE "LegalCopyright", "Copyright (C) 2008-2011"
             VALUE "OriginalFilename", "SVNProtocol.dll"
             VALUE "ProductName", "SVNProtocolHandler"
             VALUE "ProductVersion", STRPRODUCTVER
