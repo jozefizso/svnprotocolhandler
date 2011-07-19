@@ -28,18 +28,18 @@ using namespace std;
 class CAuthDialog : public CDialog
 {
 public:
-	CAuthDialog(HWND hParent);
-	~CAuthDialog(void);
+    CAuthDialog(HWND hParent);
+    ~CAuthDialog(void);
 
-	wstring					username;
-	wstring					password;
-	wstring					realm;
+    wstring                 username;
+    wstring                 password;
+    wstring                 realm;
 protected:
-	LRESULT CALLBACK		DlgFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	LRESULT					DoCommand(int id);
+    LRESULT CALLBACK        DlgFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    LRESULT                 DoCommand(int id);
 
 private:
 
 private:
-	HWND					m_hParent;
+    HWND                    m_hParent;
 };

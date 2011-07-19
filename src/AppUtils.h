@@ -25,20 +25,20 @@ using namespace std;
 class CAppUtils
 {
 public:
-	CAppUtils(void);
-	~CAppUtils(void);
+    CAppUtils(void);
+    ~CAppUtils(void);
 
-	static string					PathEscape(const string& path);
+    static string                   PathEscape(const string& path);
 
-	/**
-	 * Replaces escaped sequences with the corresponding characters in a string.
-	 */
-	static CStringA					PathUnescape(const CStringA& path);
-	static CStringW					PathUnescape(const CStringW& path);
-	/**
-	 * Replaces escaped sequences with the corresponding characters in a string.
-	 */
-	static void						Unescape(char * psz);
+    /**
+     * Replaces escaped sequences with the corresponding characters in a string.
+     */
+    static CStringA                 PathUnescape(const CStringA& path);
+    static CStringW                 PathUnescape(const CStringW& path);
+    /**
+     * Replaces escaped sequences with the corresponding characters in a string.
+     */
+    static void                     Unescape(char * psz);
 
 
 };

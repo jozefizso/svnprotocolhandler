@@ -27,36 +27,36 @@ SVN svn;
 // CSVNPluggableProtocol
 
 class ATL_NO_VTABLE CSVNPluggableProtocol :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CSVNPluggableProtocol, &CLSID_SVNPluggableProtocol>,
-	public IInternetProtocol,
-	public IInternetProtocolInfo
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CSVNPluggableProtocol, &CLSID_SVNPluggableProtocol>,
+    public IInternetProtocol,
+    public IInternetProtocolInfo
 {
 public:
-	CSVNPluggableProtocol()
-		: m_dwPos(0)
-	{
-	}
+    CSVNPluggableProtocol()
+        : m_dwPos(0)
+    {
+    }
 
 DECLARE_REGISTRY_RESOURCEID(IDR_SVNPluggableProtocol)
 
 
 BEGIN_COM_MAP(CSVNPluggableProtocol)
-	COM_INTERFACE_ENTRY(IInternetProtocolInfo)
-	COM_INTERFACE_ENTRY(IInternetProtocol)
-	COM_INTERFACE_ENTRY(IInternetProtocolRoot)
+    COM_INTERFACE_ENTRY(IInternetProtocolInfo)
+    COM_INTERFACE_ENTRY(IInternetProtocol)
+    COM_INTERFACE_ENTRY(IInternetProtocolRoot)
 END_COM_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
-		return S_OK;
-	}
+    HRESULT FinalConstruct()
+    {
+        return S_OK;
+    }
 
-	void FinalRelease()
-	{
-	}
+    void FinalRelease()
+    {
+    }
 
 // IInternetProtocol interface
 public:
@@ -81,24 +81,24 @@ public:
 
 // IInternetProtocolInfo interface
 public:
-	STDMETHOD(CombineUrl)(LPCWSTR pwzBaseUrl, LPCWSTR pwzRelativeUrl, DWORD dwCombineFlags,
-		LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved);
-	STDMETHOD(CompareUrl)(LPCWSTR pwzUrl1, LPCWSTR pwzUrl2, DWORD dwCompareFlags);
-	STDMETHOD(ParseUrl)(LPCWSTR pwzUrl, PARSEACTION ParseAction, DWORD dwParseFlags,
-		LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved);
-	STDMETHOD(QueryInfo)( LPCWSTR pwzUrl, QUERYOPTION QueryOption, DWORD dwQueryFlags,
-		LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD dwReserved);
+    STDMETHOD(CombineUrl)(LPCWSTR pwzBaseUrl, LPCWSTR pwzRelativeUrl, DWORD dwCombineFlags,
+        LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved);
+    STDMETHOD(CompareUrl)(LPCWSTR pwzUrl1, LPCWSTR pwzUrl2, DWORD dwCompareFlags);
+    STDMETHOD(ParseUrl)(LPCWSTR pwzUrl, PARSEACTION ParseAction, DWORD dwParseFlags,
+        LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved);
+    STDMETHOD(QueryInfo)( LPCWSTR pwzUrl, QUERYOPTION QueryOption, DWORD dwQueryFlags,
+        LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD dwReserved);
 
 private:
-	void CreateErrorPage(IInternetProtocolSink *pIProtSink);
+    void CreateErrorPage(IInternetProtocolSink *pIProtSink);
 
-	CComPtr<IInternetProtocolSink> m_spSink;
-	CComPtr<IInternetBindInfo> m_spBindInfo;
-	DWORD m_dwPos;
-	CStringA m_sResultPage;
-	svn_stream_t * stream;
-	apr_size_t m_fileSize;
-	bool bDownloadFinished;
+    CComPtr<IInternetProtocolSink> m_spSink;
+    CComPtr<IInternetBindInfo> m_spBindInfo;
+    DWORD m_dwPos;
+    CStringA m_sResultPage;
+    svn_stream_t * stream;
+    apr_size_t m_fileSize;
+    bool bDownloadFinished;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SVNPluggableProtocol), CSVNPluggableProtocol)

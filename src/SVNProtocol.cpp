@@ -27,8 +27,8 @@ HINSTANCE g_hInstance;
 class CSVNProtocolModule : public CAtlDllModuleT< CSVNProtocolModule >
 {
 public :
-	DECLARE_LIBID(LIBID_SVNProtocolLib)
-	DECLARE_REGISTRY_APPID_RESOURCEID(IDR_SVNPROTOCOL, "{E066CD38-CD6D-4fde-A58D-54F1A81B271E}")
+    DECLARE_LIBID(LIBID_SVNProtocolLib)
+    DECLARE_REGISTRY_APPID_RESOURCEID(IDR_SVNPROTOCOL, "{E066CD38-CD6D-4fde-A58D-54F1A81B271E}")
 };
 
 CSVNProtocolModule _AtlModule;
@@ -37,15 +37,15 @@ CSVNProtocolModule _AtlModule;
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	g_hInstance = hInstance;
-	switch (dwReason)
-	{
-	case DLL_PROCESS_ATTACH:
-		break;
-	case DLL_PROCESS_DETACH:
-		break;
-	}
-    return _AtlModule.DllMain(dwReason, lpReserved); 
+    g_hInstance = hInstance;
+    switch (dwReason)
+    {
+    case DLL_PROCESS_ATTACH:
+        break;
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return _AtlModule.DllMain(dwReason, lpReserved);
 }
 
 
@@ -70,14 +70,14 @@ STDAPI DllRegisterServer(void)
 {
     // registers object, typelib and all interfaces in typelib
     HRESULT hr = _AtlModule.DllRegisterServer();
-	return hr;
+    return hr;
 }
 
 
 // DllUnregisterServer - Removes entries from the system registry
 STDAPI DllUnregisterServer(void)
 {
-	HRESULT hr = _AtlModule.DllUnregisterServer();
-	return hr;
+    HRESULT hr = _AtlModule.DllUnregisterServer();
+    return hr;
 }
 
