@@ -17,8 +17,10 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 #include "StdAfx.h"
+#pragma warning(push)
 #include "svn.h"
 #include "svn_sorts.h"
+#pragma warning(pop)
 
 #include "version.h"
 #include "AppUtils.h"
