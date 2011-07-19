@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{a83818f8-3200-4630-9f29-d7bf643506c7}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{3da1b47c-4bdf-4483-bb9f-e0ebc5e07b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Externals">
+      <UniqueIdentifier>{a6b4bc97-a65b-4a07-8928-8430f9cc49f4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AppUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVNPluggableProtocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVNPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVNProtocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnicodeUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVNProtocol_i.c">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SVNProtocol.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SVNPluggableProtocol.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SVNProtocol.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\default.build">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="setup\Setup.wxs">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="setup\Setup64.wxs">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="SVNProtocol.build">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\version.build.in">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\versioninfo.build">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="setup\WixUI_Custom.wxs">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\ext\build\apr.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+    <None Include="..\ext\build\aprutil.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+    <None Include="..\ext\build\default.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+    <None Include="..\ext\build\sasl.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+    <None Include="..\ext\build\subversion.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+    <None Include="..\ext\build\zlib.build">
+      <Filter>Scripts\Externals</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="SVNProtocol.idl">
+      <Filter>Source Files</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AppUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVNPluggableProtocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVNPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnicodeUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVNProtocol.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SVNProtocol.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
