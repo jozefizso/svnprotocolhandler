@@ -56,7 +56,7 @@ void SVN::Create()
     if (bCreated)
         return;
     apr_initialize();
-    svn_dso_initialize();
+    svn_dso_initialize2();
 
     // to avoid that SASL will look for and load its plugin dlls all around the
     // system, we set the path here.
@@ -106,7 +106,7 @@ void SVN::Create()
     'username/password' creds and 'username' creds.  */
     svn_auth_get_windows_simple_provider (&provider, pool);
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
-    svn_auth_get_simple_provider (&provider, pool);
+    svn_auth_get_simple_provider2 (&provider, svn_auth_plaintext_prompt, this, pool);
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
     svn_auth_get_username_provider (&provider, pool);
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
@@ -118,7 +118,7 @@ void SVN::Create()
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
     svn_auth_get_ssl_client_cert_file_provider (&provider, pool);
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
-    svn_auth_get_ssl_client_cert_pw_file_provider (&provider, pool);
+    svn_auth_get_ssl_client_cert_pw_file_provider2 (&provider, svn_auth_plaintext_passphrase_prompt, this, pool);
     APR_ARRAY_PUSH (providers, svn_auth_provider_object_t *) = provider;
 
     /* Two prompting providers, one for username/password, one for
@@ -170,6 +170,26 @@ void SVN::Create()
     }
     m_bCanceled = false;
     bCreated = true;
+}
+
+svn_error_t* SVN::svn_auth_plaintext_prompt(svn_boolean_t *may_save_plaintext, const char * /*realmstring*/, void * /*baton*/, apr_pool_t * /*pool*/)
+{
+    // never save passwords in plaintext
+    // we never save passwords in CommitMonitor anyway, since we have the auth info
+    // stored in the monitored-url info.
+    // So we shouldn't even get here.
+    *may_save_plaintext = false;
+    return SVN_NO_ERROR;
+}
+
+svn_error_t* SVN::svn_auth_plaintext_passphrase_prompt(svn_boolean_t *may_save_plaintext, const char * /*realmstring*/, void * /*baton*/, apr_pool_t * /*pool*/)
+{
+    // never save passwords in plaintext
+    // we never save passwords in CommitMonitor anyway, since we have the auth info
+    // stored in the monitored-url info.
+    // So we shouldn't even get here.
+    *may_save_plaintext = false;
+    return SVN_NO_ERROR;
 }
 
 svn_error_t* SVN::cancel(void *baton)
@@ -287,7 +307,7 @@ svn_stream_t * SVN::GetFileStream(const wstring& path)
         Err = svn_error_wrap_apr(status, NULL);
         return NULL;
     }
-    stream = svn_stream_from_aprfile(file, pool);
+    stream = svn_stream_from_aprfile2(file, false, pool);
     return stream;
 }
 
@@ -301,7 +321,7 @@ bool SVN::Cat(const wstring& sUrl, svn_stream_t * stream)
     pegrev.kind = svn_opt_revision_head;
     rev.kind = svn_opt_revision_head;
 
-    const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
+    const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
     Err = svn_client_cat2(stream, urla,
         &pegrev, &rev, m_pctx, localpool);
 
@@ -328,13 +348,13 @@ bool SVN::Cat(const wstring& sUrl, const stdstring& path)
         Err = svn_error_wrap_apr(status, NULL);
         return false;
     }
-    stream = svn_stream_from_aprfile(file, localpool);
+    stream = svn_stream_from_aprfile2(file, false, localpool);
 
     svn_opt_revision_t pegrev, rev;
     pegrev.kind = svn_opt_revision_head;
     rev.kind = svn_opt_revision_head;
 
-    const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
+    const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(sUrl)).c_str(), localpool);
     Err = svn_client_cat2(stream, urla,
         &pegrev, &rev, m_pctx, localpool);
 
@@ -367,9 +387,9 @@ const SVNInfoData * SVN::GetFirstFileInfo(wstring path, svn_revnum_t pegrev, svn
         rev.value.number = revision;
     }
 
-    const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(path)).c_str(), localpool);
+    const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(path)).c_str(), localpool);
 
-    Err = svn_client_info2(urla, &peg, &rev, infoReceiver, this, depth, NULL, m_pctx, localpool);
+    Err = svn_client_info3(urla, &peg, &rev, depth, true, false, NULL, infoReceiver, this, m_pctx, localpool);
     if (Err != NULL)
         return NULL;
     if (m_arInfo.size() == 0)
@@ -385,9 +405,9 @@ const SVNInfoData * SVN::GetNextFileInfo()
     return NULL;
 }
 
-svn_error_t * SVN::infoReceiver(void* baton, const char * path, const svn_info_t* info, apr_pool_t * /*pool*/)
+svn_error_t * SVN::infoReceiver(void *baton, const char *abspath_or_url, const svn_client_info2_t *info, apr_pool_t * /*scratch_pool*/)
 {
-    if ((path == NULL)||(info == NULL))
+    if ((abspath_or_url == NULL)||(info == NULL))
         return NULL;
 
     SVN * pThis = (SVN *)baton;
@@ -406,7 +426,7 @@ svn_error_t * SVN::infoReceiver(void* baton, const char * path, const svn_info_t
     data.lastchangedtime = info->last_changed_date/1000000L;
     if (info->last_changed_author)
         data.author = CUnicodeUtils::StdGetUnicode(info->last_changed_author);
-
+    data.size = info->size;
     if (info->lock)
     {
         if (info->lock->path)
@@ -422,26 +442,6 @@ svn_error_t * SVN::infoReceiver(void* baton, const char * path, const svn_info_t
         data.lock_expirationtime = info->lock->expiration_date/1000000L;
     }
 
-    data.hasWCInfo = !!info->has_wc_info;
-    if (info->has_wc_info)
-    {
-        data.schedule = info->schedule;
-        if (info->copyfrom_url)
-            data.copyfromurl = CUnicodeUtils::StdGetUnicode(info->copyfrom_url);
-        data.copyfromrev = info->copyfrom_rev;
-        data.texttime = info->text_time/1000000L;
-        data.proptime = info->prop_time/1000000L;
-        if (info->checksum)
-            data.checksum = CUnicodeUtils::StdGetUnicode(info->checksum);
-        if (info->conflict_new)
-            data.conflict_new = CUnicodeUtils::StdGetUnicode(info->conflict_new);
-        if (info->conflict_old)
-            data.conflict_old = CUnicodeUtils::StdGetUnicode(info->conflict_old);
-        if (info->conflict_wrk)
-            data.conflict_wrk = CUnicodeUtils::StdGetUnicode(info->conflict_wrk);
-        if (info->prejfile)
-            data.prejfile = CUnicodeUtils::StdGetUnicode(info->prejfile);
-    }
     pThis->m_arInfo.push_back(data);
     return NULL;
 }
@@ -455,7 +455,7 @@ svn_revnum_t SVN::GetHEADRevision(const wstring& url)
     svn_revnum_t rev = 0;
 
     // make sure the url is canonical.
-    const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(url)).c_str(), localpool);
+    const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(url)).c_str(), localpool);
 
     if (urla == NULL)
         return rev;
@@ -482,8 +482,8 @@ const CString SVN::GetMimeType(const stdstring& url)
 
     apr_hash_t * props = apr_hash_make(localpool);
 
-    const char * urla = svn_path_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(url)).c_str(), localpool);
-    Err = svn_client_propget3(&props, "svn:mime-type", urla, &pegrev, &rev, NULL, svn_depth_empty, NULL, m_pctx, localpool);
+    const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(url)).c_str(), localpool);
+    Err = svn_client_propget4(&props, "svn:mime-type", urla, &pegrev, &rev, NULL, svn_depth_empty, NULL, m_pctx, localpool, localpool);
     if (Err == NULL)
     {
         apr_hash_index_t *hi;
@@ -506,7 +506,7 @@ wstring SVN::CanonicalizeURL(const wstring& url)
 {
     m_bCanceled = false;
     SVNPool localpool(pool);
-    return CUnicodeUtils::StdGetUnicode(string(svn_path_canonicalize(CUnicodeUtils::StdGetUTF8(url).c_str(), localpool)));
+    return CUnicodeUtils::StdGetUnicode(string(svn_uri_canonicalize(CUnicodeUtils::StdGetUTF8(url).c_str(), localpool)));
 }
 
 void SVN::progress_func(apr_off_t progress, apr_off_t total, void *baton, apr_pool_t * /*pool*/)

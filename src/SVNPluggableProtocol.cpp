@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008 - Stefan Kueng
+// Copyright (C) 2008, 2011 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -180,7 +180,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                             bDownloadFinished = true;
                             ATLTRACE(_T("ReportData: file download finished\n"));
                             stream = svn.GetFileStream(cachePath);
-                            pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, m_fileSize, m_fileSize);
+                            pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION | BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE | BSCF_AVAILABLEDATASIZEUNKNOWN, (ULONG)m_fileSize, (ULONG)m_fileSize);
                             pIProtSink->ReportResult(S_OK, 200, 0);
                         }
                     }
@@ -270,7 +270,7 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
         {
             return S_FALSE;
         }
-        apr_size_t size = m_fileSize - m_dwPos;
+        apr_size_t size = (apr_size_t)m_fileSize - m_dwPos;
         if (m_fileSize < m_dwPos)
             size = 4096;
         if (size == 0)

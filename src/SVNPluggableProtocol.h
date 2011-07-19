@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008 - Stefan Kueng
+// Copyright (C) 2008, 2011 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -97,7 +97,7 @@ private:
     DWORD m_dwPos;
     CStringA m_sResultPage;
     svn_stream_t * stream;
-    apr_size_t m_fileSize;
+    svn_filesize_t m_fileSize;
     bool bDownloadFinished;
 };
 

@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008 - Stefan Kueng
+// Copyright (C) 2008, 2011 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -74,18 +74,7 @@ public:
     __time64_t          lock_createtime;
     __time64_t          lock_expirationtime;
 
-    bool                hasWCInfo;
-    svn_wc_schedule_t   schedule;
-    stdstring           copyfromurl;
-    svn_revnum_t        copyfromrev;
-    __time64_t          texttime;
-    __time64_t          proptime;
-    stdstring           checksum;
-    stdstring           conflict_old;
-    stdstring           conflict_new;
-    stdstring           conflict_wrk;
-    stdstring           prejfile;
-    apr_size_t          size;
+    svn_filesize_t      size;
 };
 
 
@@ -158,8 +147,8 @@ private:
 
 private:
     static svn_error_t *        cancel(void *baton);
-    static svn_error_t *        infoReceiver(void* baton, const char * path,
-                                            const svn_info_t* info, apr_pool_t * pool);
+    static svn_error_t *        infoReceiver(void *baton, const char *abspath_or_url, const svn_client_info2_t *info,
+                                            apr_pool_t *scratch_pool);
     static svn_error_t *        sslserverprompt(svn_auth_cred_ssl_server_trust_t **cred_p,
                                             void *baton, const char *realm,
                                             apr_uint32_t failures,
@@ -173,7 +162,12 @@ private:
     static svn_error_t *        simpleprompt(svn_auth_cred_simple_t **cred, void *baton,
                                             const char *realm, const char *username,
                                             svn_boolean_t may_save, apr_pool_t *pool);
-
+    static svn_error_t*         svn_auth_plaintext_prompt(svn_boolean_t *may_save_plaintext,
+                                            const char *realmstring, void *baton,
+                                            apr_pool_t *pool);
+    static svn_error_t*         svn_auth_plaintext_passphrase_prompt(svn_boolean_t *may_save_plaintext,
+                                            const char *realmstring, void *baton,
+                                            apr_pool_t *pool);
 };
 
 
