@@ -24,7 +24,7 @@
     <mkdir dir="${configuration}_${platform}" />
     <loadfile file="include\apr.hw" property="configfile">
       <filterchain>
-        <replacestring from="#define APR_HAVE_IPV6           0" to="#define APR_HAVE_IPV6           1" if="${ipv6 == 'enabled'}" />
+        <replacestring from="#define APR_HAVE_IPV6           0" to="#define APR_HAVE_IPV6           1" />
       </filterchain>
     </loadfile>
     <echo file="include\apr.h" message="${configfile}" />
@@ -55,7 +55,7 @@
         <include name="network_io\win32\*.c" />
         <include name="network_io\unix\inet_ntop.c" />
         <include name="network_io\unix\inet_pton.c" />
-        <include name="network_io\unix\multicast.c" if="${ipv6 == 'enabled'}" />
+        <include name="network_io\unix\multicast.c" />
         <include name="network_io\unix\sockaddr.c" />
         <include name="atomic\win32\apr_atomic.c" />
         <include name="dso\win32\dso.c" />

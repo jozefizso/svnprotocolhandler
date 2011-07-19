@@ -13,8 +13,6 @@
   <property name="crosscompile" value="" />
   <!-- default: we don't clean first -->
   <property name="cleanup" value="" />
-  <!-- default: we don't build with IPv6 support -->
-  <property name="ipv6" value="" />
 
   <include buildfile="default.build.user" />
 
@@ -58,15 +56,8 @@
     <echo message="ignore cross-compiling (only supported for x64)" level="Warning" if="${platform != 'x64'}"/>
   </target>
 
-  <target name="ipv6">
-    <description>
-      builds with IPv6 support
-    </description>
-    <property name="ipv6" value="enabled" />
-  </target>
-
   <!-- ====================================================================== -->
-  <!-- Project targets														-->
+  <!-- Project targets                                                        -->
   <!-- ====================================================================== -->
 
   <target name="clean" depends="VSNET">
@@ -230,7 +221,6 @@
     <echo message="          (AMD64/EM64T only -- will not work on Itanium systems.)" />
     <echo message="cross   : cross-compile on win32 for the given target platform." />
     <echo message="          (currently only available with x64.)" />
-    <echo message="ipv6    : builds the packages with IPv6 support" />
     <echo />
     <echo message="Please specify the configuration targets BEFORE the main target." />
     <echo message="Examples:" />
