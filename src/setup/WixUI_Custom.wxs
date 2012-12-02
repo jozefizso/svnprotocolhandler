@@ -2,11 +2,11 @@
 
 <!--
 First-time install dialog sequence:      Maintenance dialog sequence:
- - WixUI_WelcomeDlg                     - WixUI_MaintenanceWelcomeDlg
- - WixUI_LicenseAgreementDlg            - WixUI_MaintenanceTypeDlg
- - WixUI_InstallDirDlg                    - WixUI_InstallDirDlg
-   - WixUI_VerifyReadyDlg                 - WixUI_VerifyReadyDlg
-   - WixUI_DiskCostDlg
+ - WixUI_WelcomeDlg                      - WixUI_MaintenanceWelcomeDlg
+ - WixUI_LicenseAgreementDlg             - WixUI_MaintenanceTypeDlg
+ - WixUI_InstallDirDlg                   - WixUI_InstallDirDlg
+ - WixUI_VerifyReadyDlg                  - WixUI_VerifyReadyDlg
+ - WixUI_DiskCostDlg
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">

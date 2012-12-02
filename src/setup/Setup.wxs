@@ -1,25 +1,25 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product
-	UpgradeCode="3266C2C2-16A6-49aa-812A-813534EF115B"
-	Name='SVNProtocolHandler'
-	Id='*'
-	Language='1031'
-	Codepage='1252'
-	Version='1.5.1'
-	Manufacturer='TortoiseSVN.net'>
+    UpgradeCode="3266C2C2-16A6-49aa-812A-813534EF115B"
+    Name='SVNProtocolHandler'
+    Id='*'
+    Language='1031'
+    Codepage='1252'
+    Version='1.5.1'
+    Manufacturer='TortoiseSVN.net'>
 
     <Package Id='*' Keywords='Installer'
-		  Description="SVNProtocolHandler"
-		  Comments='http://tortoisesvn.net' Manufacturer='TortoiseSVN'
-		  InstallerVersion='200' Languages='1031' Compressed='yes' SummaryCodepage='1252' />
+          Description="SVNProtocolHandler"
+          Comments='http://tortoisesvn.net' Manufacturer='TortoiseSVN'
+          InstallerVersion='200' Languages='1031' Compressed='yes' SummaryCodepage='1252' />
 
     <Upgrade Id="3266C2C2-16A6-49aa-812A-813534EF115B" >
       <!-- flag is set if the install will trigger an upgrade of an existing install -->
       <UpgradeVersion Property="PREVIOUSVERSIONSINSTALLED" Maximum="1.5.1" IncludeMaximum="no" />
     </Upgrade>
 
-    <Media Id='1' Cabinet='SVNPH.cab' EmbedCab='yes' />
+    <Media Id='1' Cabinet='SVNPH.cab' EmbedCab='yes' Compression='high' />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
     <Condition Message='This application only runs on Windows 2000 and later.'>VersionNT &gt;= 500</Condition>
 
@@ -63,7 +63,7 @@
     </Directory>
 
     <Feature Id='Complete' Title='SVNProtocolHandler' Description='The complete package.'
-		  Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+          Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
       <Feature Id='MainDll' Title='Program' Description='The main dll.' Level='1'>
         <ComponentRef Id='MainDll' />
       </Feature>

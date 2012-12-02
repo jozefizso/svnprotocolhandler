@@ -1,40 +1,40 @@
 HKCR
 {
-	SVNProtocol.PluggableProtocol.1 = s 'SVN Pluggable Protocol'
-	{
-		CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
-	}
-	SVNProtocol.PluggableProtocol = s 'SVN Pluggable Protocol'
-	{
-		CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
-		CurVer = s 'SVNProtocol.PluggableProtocol.1'
-	}
-	NoRemove CLSID
-	{
-		ForceRemove {6B46B201-6330-4b79-BB4D-34BE6FB3423B} = s 'SVN Pluggable Protocol'
-		{
-			ProgID = s 'SVNProtocol.PluggableProtocol.1'
-			VersionIndependentProgID = s 'SVNProtocol.PluggableProtocol'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Apartment'
-			}
-			val AppID = s '%APPID%'
-			'TypeLib' = s '{75C230D1-EFFC-479d-9B61-56A29AF778CA}'
-		}
-	}
-	NoRemove PROTOCOLS
-	{
-		NoRemove Handler
-		{
-			ForceRemove svn = s 'svn: pluggable protocol'
-			{
-				val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
-			}
-			ForceRemove svn+ssh = s 'svn+ssh: pluggable protocol'
-			{
-				val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
-			}
-		}
-	}
+    SVNProtocol.PluggableProtocol.1 = s 'SVN Pluggable Protocol'
+    {
+        CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
+    }
+    SVNProtocol.PluggableProtocol = s 'SVN Pluggable Protocol'
+    {
+        CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
+        CurVer = s 'SVNProtocol.PluggableProtocol.1'
+    }
+    NoRemove CLSID
+    {
+        ForceRemove {6B46B201-6330-4b79-BB4D-34BE6FB3423B} = s 'SVN Pluggable Protocol'
+        {
+            ProgID = s 'SVNProtocol.PluggableProtocol.1'
+            VersionIndependentProgID = s 'SVNProtocol.PluggableProtocol'
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+            val AppID = s '%APPID%'
+            'TypeLib' = s '{75C230D1-EFFC-479d-9B61-56A29AF778CA}'
+        }
+    }
+    NoRemove PROTOCOLS
+    {
+        NoRemove Handler
+        {
+            ForceRemove svn = s 'svn: pluggable protocol'
+            {
+                val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
+            }
+            ForceRemove svn+ssh = s 'svn+ssh: pluggable protocol'
+            {
+                val CLSID = s '{6B46B201-6330-4b79-BB4D-34BE6FB3423B}'
+            }
+        }
+    }
 }

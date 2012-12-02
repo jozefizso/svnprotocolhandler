@@ -1,11 +1,11 @@
 HKCR
 {
-	NoRemove AppID
-	{
-		'%APPID%' = s 'SVNProtocol'
-		'SVNProtocol.DLL'
-		{
-			val AppID = s '%APPID%'
-		}
-	}
+    NoRemove AppID
+    {
+        '%APPID%' = s 'SVNProtocol'
+        'SVNProtocol.DLL'
+        {
+            val AppID = s '%APPID%'
+        }
+    }
 }

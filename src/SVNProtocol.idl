@@ -8,27 +8,27 @@ import "oaidl.idl";
 import "ocidl.idl";
 
 [
-	object,
-	uuid(4DB3A4F6-3B43-48a6-AA56-5EC1497C1904),
-	helpstring("ISVNPluggableProtocol Interface"),
-	pointer_default(unique)
+    object,
+    uuid(4DB3A4F6-3B43-48a6-AA56-5EC1497C1904),
+    helpstring("ISVNPluggableProtocol Interface"),
+    pointer_default(unique)
 ]
 interface ISVNPluggableProtocol : IUnknown{
 };
 [
-	uuid(75C230D1-EFFC-479d-9B61-56A29AF778CA),
-	version(1.0),
-	helpstring("SVNProtocol 1.0 Type Library")
+    uuid(75C230D1-EFFC-479d-9B61-56A29AF778CA),
+    version(1.0),
+    helpstring("SVNProtocol 1.0 Type Library")
 ]
 library SVNProtocolLib
 {
-	importlib("stdole2.tlb");
-	[
-		uuid(6B46B201-6330-4b79-BB4D-34BE6FB3423B),
-		helpstring("SVN Pluggable Protocol")
-	]
-	coclass SVNPluggableProtocol
-	{
-		[default] interface ISVNPluggableProtocol;
-	};
+    importlib("stdole2.tlb");
+    [
+        uuid(6B46B201-6330-4b79-BB4D-34BE6FB3423B),
+        helpstring("SVN Pluggable Protocol")
+    ]
+    coclass SVNPluggableProtocol
+    {
+        [default] interface ISVNPluggableProtocol;
+    };
 };
