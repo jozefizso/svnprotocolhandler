@@ -6,7 +6,7 @@
 
         <if test="${cleanup == 'yes'}">
             <exec program="devenv.com" >
-                <arg value="SVNProtocol.sln" />
+                <arg value="..\SVNProtocol.sln" />
                 <arg value="/clean" />
                 <arg value="${configuration}|${platform}" />
             </exec>
@@ -37,7 +37,7 @@
 
     <target name="SVNProtocol" depends="clean,versioninfo">
         <exec program="devenv.com" >
-            <arg value="SVNProtocol.sln" />
+            <arg value="..\SVNProtocol.sln" />
             <arg value="/rebuild" />
             <arg value="${configuration}|${platform}" />
         </exec>
