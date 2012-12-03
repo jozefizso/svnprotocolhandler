@@ -10,8 +10,7 @@
 #include "winresrc.h"
 #ifndef APSTUDIO_INVOKED
 #include "SVNProtocol.rc2"
-#endif
-
+#endif
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -68,9 +67,9 @@ CAPTION "Authentication"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "",IDC_REALMSTRING,7,7,184,27
-    LTEXT           "Username:",IDC_STATIC,7,37,36,8
+    LTEXT           "Username:",IDC_STATIC,7,37,43,8
     EDITTEXT        IDC_USERNAME,57,37,134,14,ES_AUTOHSCROLL
-    LTEXT           "Password:",IDC_STATIC,7,61,34,8
+    LTEXT           "Password:",IDC_STATIC,7,61,43,8
     EDITTEXT        IDC_PASSWORD,57,60,134,14,ES_PASSWORD | ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,81,83,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,141,83,50,14
