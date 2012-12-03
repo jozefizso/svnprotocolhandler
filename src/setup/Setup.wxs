@@ -6,7 +6,7 @@
     Id="*"
     Language="1031"
     Codepage="1252"
-    Version="1.5.1"
+    Version="1.2.0"
     Manufacturer="TortoiseSVN.net">
 
     <Package Id="*" Keywords="Installer"
