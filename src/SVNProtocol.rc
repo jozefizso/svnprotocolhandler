@@ -7,7 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "winres.h"
+#include "winresrc.h"
 #ifndef APSTUDIO_INVOKED
 #include "SVNProtocol.rc2"
 #endif
@@ -16,13 +16,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -37,10 +35,10 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""winres.h""\r\n"
+    "#include ""winresrc.h""\r\n"
     "#ifndef APSTUDIO_INVOKED\r\n"
     "#include ""SVNProtocol.rc2""\r\n"
-    "#endif\r\n"
+    "#endif\r\0"
 END
 
 3 TEXTINCLUDE 
@@ -85,7 +83,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_AUTHDLG, DIALOG
     BEGIN
@@ -98,19 +96,9 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
 
-STRINGTABLE 
-BEGIN
-    IDS_PROJNAME            "SVNProtocol"
-END
-
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
 
 
 #ifndef APSTUDIO_INVOKED
@@ -118,8 +106,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-1 TYPELIB "SVNProtocol.tlb"
-
+1 TYPELIB "SVNProtocol.tlb"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

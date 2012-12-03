@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by SVNProtocol.rc
 //
-#define IDS_PROJNAME                    100
 #define IDR_SVNPROTOCOL                 101
 #define IDR_SVNPluggableProtocol        102
 #define IDC_USERNAME                    201
@@ -11,6 +10,7 @@
 #define IDC_REALMSTRING                 203
 #define IDC_CHECK1                      204
 #define IDC_SAVEAUTH                    204
+#define IDC_STATIC                      -1
 
 // Next default values for new objects
 //
