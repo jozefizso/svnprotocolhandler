@@ -149,7 +149,7 @@ std::string CAppUtils::PathEscape(const std::string& path)
 
 CStringA CAppUtils::PathUnescape(const CStringA& path)
 {
-    std::auto_ptr<char> urlabuf (new char[path.GetLength()+1]);
+    std::unique_ptr<char> urlabuf (new char[path.GetLength()+1]);
 
     strcpy_s(urlabuf.get(), path.GetLength()+1, path);
     Unescape(urlabuf.get());

@@ -18,7 +18,7 @@
 //
 #pragma once
 #include <string>
-#include "basedialog.h"
+#include "BaseDialog.h"
 
 
 /**

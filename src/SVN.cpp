@@ -392,7 +392,7 @@ const SVNInfoData * SVN::GetFirstFileInfo(std::wstring path, svn_revnum_t pegrev
     Err = svn_client_info3(urla, &peg, &rev, depth, true, false, NULL, infoReceiver, this, m_pctx, localpool);
     if (Err != NULL)
         return NULL;
-    if (m_arInfo.size() == 0)
+    if (m_arInfo.empty())
         return NULL;
     return &m_arInfo[0];
 }
