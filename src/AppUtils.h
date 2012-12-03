@@ -20,7 +20,6 @@
 
 #include <string>
 
-using namespace std;
 
 class CAppUtils
 {
@@ -28,7 +27,7 @@ public:
     CAppUtils(void);
     ~CAppUtils(void);
 
-    static string                   PathEscape(const string& path);
+    static std::string              PathEscape(const std::string& path);
 
     /**
      * Replaces escaped sequences with the corresponding characters in a string.

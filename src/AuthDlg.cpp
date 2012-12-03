@@ -22,8 +22,8 @@
 
 
 CAuthDialog::CAuthDialog(HWND hParent)
+    : m_hParent(hParent)
 {
-    m_hParent = hParent;
 }
 
 CAuthDialog::~CAuthDialog(void)

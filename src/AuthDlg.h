@@ -20,7 +20,6 @@
 #include <string>
 #include "basedialog.h"
 
-using namespace std;
 
 /**
  * auth dialog.
@@ -31,9 +30,9 @@ public:
     CAuthDialog(HWND hParent);
     ~CAuthDialog(void);
 
-    wstring                 username;
-    wstring                 password;
-    wstring                 realm;
+    std::wstring            username;
+    std::wstring            password;
+    std::wstring            realm;
 protected:
     LRESULT CALLBACK        DlgFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
     LRESULT                 DoCommand(int id);

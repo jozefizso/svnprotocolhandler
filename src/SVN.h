@@ -50,7 +50,6 @@ typedef std::wstring wide_string;
 
 #include <string>
 
-using namespace std;
 
 class SVNInfoData
 {
@@ -85,10 +84,10 @@ public:
     ~SVN(void);
     void Create();
 
-    bool Cat(const wstring& sUrl, const wstring& path);
-    bool Cat(const wstring& sUrl, svn_stream_t * stream);
+    bool Cat(const std::wstring& sUrl, const std::wstring& path);
+    bool Cat(const std::wstring& sUrl, svn_stream_t * stream);
     svn_stream_t * GetMemoryStream();
-    svn_stream_t * GetFileStream(const wstring& path);
+    svn_stream_t * GetFileStream(const std::wstring& path);
 
     /**
      * returns the info for the \a path.
@@ -110,8 +109,8 @@ public:
 
     const CString GetMimeType(const stdstring& url);
 
-    wstring CanonicalizeURL(const wstring& url);
-    wstring GetLastErrorMsg();
+    std::wstring CanonicalizeURL(const std::wstring& url);
+    std::wstring GetLastErrorMsg();
 
     struct SVNProgress
     {
@@ -119,7 +118,7 @@ public:
         apr_off_t total;            ///< operation progress
         apr_off_t overall_total;    ///< total bytes transferred, use SetAndClearProgressInfo() to reset this
         apr_off_t BytesPerSecond;   ///< Speed in bytes per second
-        wstring   SpeedString;      ///< String for speed. Either "xxx Bytes/s" or "xxx kBytes/s"
+        std::wstring SpeedString;   ///< String for speed. Either "xxx Bytes/s" or "xxx kBytes/s"
     };
 
     bool                        m_bCanceled;
@@ -131,7 +130,7 @@ private:
     svn_client_ctx_t *          m_pctx;         ///< pointer to client context
     svn_auth_baton_t *          auth_baton;
 
-    vector<SVNInfoData>         m_arInfo;       ///< contains all gathered info structs.
+    std::vector<SVNInfoData>    m_arInfo;       ///< contains all gathered info structs.
     unsigned int                m_pos;          ///< the current position of the vector.
 
     SVNProgress                 m_SVNProgressMSG;

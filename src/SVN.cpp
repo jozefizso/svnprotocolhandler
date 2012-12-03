@@ -84,7 +84,7 @@ void SVN::Create()
     if (Err == 0)
     {
         //set up the SVN_SSH param
-        wstring tsvn_ssh = (LPCTSTR)CRegStdString(_T("Software\\TortoiseSVN\\SSH"));
+        std::wstring tsvn_ssh = (LPCTSTR)CRegStdString(_T("Software\\TortoiseSVN\\SSH"));
         if (!tsvn_ssh.empty())
         {
             svn_config_t * cfg = (svn_config_t *)apr_hash_get (m_pctx->config, SVN_CONFIG_CATEGORY_CONFIG,
@@ -212,9 +212,9 @@ svn_error_t* SVN::sslserverprompt(svn_auth_cred_ssl_server_trust_t **cred_p, voi
     return SVN_NO_ERROR;
 }
 
-wstring SVN::GetLastErrorMsg()
+std::wstring SVN::GetLastErrorMsg()
 {
-    wstring msg;
+    std::wstring msg;
     char errbuf[256];
 
     if (Err != NULL)
@@ -294,7 +294,7 @@ svn_stream_t * SVN::GetMemoryStream()
     return s;
 }
 
-svn_stream_t * SVN::GetFileStream(const wstring& path)
+svn_stream_t * SVN::GetFileStream(const std::wstring& path)
 {
     svn_stream_t * stream;
     apr_file_t * file;
@@ -311,7 +311,7 @@ svn_stream_t * SVN::GetFileStream(const wstring& path)
     return stream;
 }
 
-bool SVN::Cat(const wstring& sUrl, svn_stream_t * stream)
+bool SVN::Cat(const std::wstring& sUrl, svn_stream_t * stream)
 {
     svn_error_clear(Err);
     m_bCanceled = false;
@@ -328,7 +328,7 @@ bool SVN::Cat(const wstring& sUrl, svn_stream_t * stream)
     return (Err == NULL);
 }
 
-bool SVN::Cat(const wstring& sUrl, const stdstring& path)
+bool SVN::Cat(const std::wstring& sUrl, const stdstring& path)
 {
     svn_error_clear(Err);
     m_bCanceled = false;
@@ -363,7 +363,7 @@ bool SVN::Cat(const wstring& sUrl, const stdstring& path)
     return (Err == NULL);
 }
 
-const SVNInfoData * SVN::GetFirstFileInfo(wstring path, svn_revnum_t pegrev, svn_revnum_t revision, svn_depth_t depth)
+const SVNInfoData * SVN::GetFirstFileInfo(std::wstring path, svn_revnum_t pegrev, svn_revnum_t revision, svn_depth_t depth)
 {
     svn_error_clear(Err);
     m_bCanceled = false;
@@ -446,7 +446,7 @@ svn_error_t * SVN::infoReceiver(void *baton, const char *abspath_or_url, const s
     return NULL;
 }
 
-svn_revnum_t SVN::GetHEADRevision(const wstring& url)
+svn_revnum_t SVN::GetHEADRevision(const std::wstring& url)
 {
     svn_error_clear(Err);
     m_bCanceled = false;
@@ -496,17 +496,17 @@ const CString SVN::GetMimeType(const stdstring& url)
 
             apr_hash_this(hi, &key, NULL, &val);
             propval = (svn_string_t*)val;
-            mimeType = CUnicodeUtils::StdGetUnicode(string(propval->data, propval->len)).c_str();
+            mimeType = CUnicodeUtils::StdGetUnicode(std::string(propval->data, propval->len)).c_str();
         }
     }
     return mimeType;
 }
 
-wstring SVN::CanonicalizeURL(const wstring& url)
+std::wstring SVN::CanonicalizeURL(const std::wstring& url)
 {
     m_bCanceled = false;
     SVNPool localpool(pool);
-    return CUnicodeUtils::StdGetUnicode(string(svn_uri_canonicalize(CUnicodeUtils::StdGetUTF8(url).c_str(), localpool)));
+    return CUnicodeUtils::StdGetUnicode(std::string(svn_uri_canonicalize(CUnicodeUtils::StdGetUTF8(url).c_str(), localpool)));
 }
 
 void SVN::progress_func(apr_off_t progress, apr_off_t total, void *baton, apr_pool_t * /*pool*/)

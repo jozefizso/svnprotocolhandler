@@ -42,17 +42,17 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
         pIProtSink->ReportProgress(BINDSTATUS_FINDINGRESOURCE, strURL);
         pIProtSink->ReportProgress(BINDSTATUS_CONNECTING, strURL);
         // first get the info for the url
-        const SVNInfoData * info = svn.GetFirstFileInfo(wstring(szUrl), -1, -1, svn_depth_empty);
+        const SVNInfoData * info = svn.GetFirstFileInfo(std::wstring(szUrl), -1, -1, svn_depth_empty);
         if (info)
         {
             if (info->kind == svn_node_dir)
             {
                 // fetch the list of entries inside that directory
                 pIProtSink->ReportProgress(BINDSTATUS_SENDINGREQUEST, strURL);
-                svn_revnum_t rev = svn.GetHEADRevision(wstring(szUrl));
+                svn_revnum_t rev = svn.GetHEADRevision(std::wstring(szUrl));
                 if (svn.Err == 0)
                 {
-                    const SVNInfoData * dirInfo = svn.GetFirstFileInfo(wstring(szUrl), -1, -1, svn_depth_immediates);
+                    const SVNInfoData * dirInfo = svn.GetFirstFileInfo(std::wstring(szUrl), -1, -1, svn_depth_immediates);
                     if (dirInfo)
                     {
                         pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/html")));
@@ -69,8 +69,8 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                         sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td></td><td></td><td></td></tr>\n", (LPCSTR)sItemUrl, (LPCSTR)sItemName);
                         if (sUrl.Compare(dirInfo->reposRoot.c_str()))
                             m_sResultPage += sItemInfo;
-                        map<CStringA, CStringA> infoMapFiles;
-                        map<CStringA, CStringA> infoMapDirs;
+                        std::map<CStringA, CStringA> infoMapFiles;
+                        std::map<CStringA, CStringA> infoMapDirs;
                         pageUrl.TrimRight('/');
                         for (size_t i=0; i<svn.GetFileCount(); ++i)
                         {
@@ -98,11 +98,11 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                                 }
                             }
                         }
-                        for (map<CStringA, CStringA>::iterator it = infoMapDirs.begin(); it != infoMapDirs.end(); ++it)
+                        for (std::map<CStringA, CStringA>::iterator it = infoMapDirs.begin(); it != infoMapDirs.end(); ++it)
                         {
                             m_sResultPage += it->second;
                         }
-                        for (map<CStringA, CStringA>::iterator it = infoMapFiles.begin(); it != infoMapFiles.end(); ++it)
+                        for (std::map<CStringA, CStringA>::iterator it = infoMapFiles.begin(); it != infoMapFiles.end(); ++it)
                         {
                             m_sResultPage += it->second;
                         }
@@ -127,7 +127,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                 // get the file content
                 pIProtSink->ReportProgress(BINDSTATUS_SENDINGREQUEST, strURL);
                 // get the mime-type
-                CAtlString mimeType = svn.GetMimeType(wstring(szUrl));
+                CAtlString mimeType = svn.GetMimeType(std::wstring(szUrl));
                 if (svn.Err)
                 {
                     CreateErrorPage(pIProtSink);
@@ -163,7 +163,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                         }
                         CreateUrlCacheEntry(szUrl, 0, sExt, cachePath, 0);
                         pIProtSink->ReportProgress(BINDSTATUS_CACHEFILENAMEAVAILABLE, cachePath);
-                        if (!svn.Cat(wstring(szUrl), wstring(cachePath)))
+                        if (!svn.Cat(std::wstring(szUrl), std::wstring(cachePath)))
                         {
                             CreateErrorPage(pIProtSink);
                         }
@@ -187,7 +187,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                     else
                     {
                         stream = svn.GetMemoryStream();
-                        if (!svn.Cat(wstring(szUrl), stream))
+                        if (!svn.Cat(std::wstring(szUrl), stream))
                         {
                             CreateErrorPage(pIProtSink);
                             svn_stream_close(stream);
@@ -330,7 +330,7 @@ STDMETHODIMP CSVNPluggableProtocol::Seek(
 }
 
 STDMETHODIMP CSVNPluggableProtocol::CombineUrl(LPCWSTR /*pwzBaseUrl*/, LPCWSTR /*pwzRelativeUrl*/, DWORD /*dwCombineFlags*/,
-                                                LPWSTR /*pwzResult*/, DWORD /*cchResult*/, DWORD * /*pcchResult*/, DWORD /*dwReserved*/)
+                                               LPWSTR /*pwzResult*/, DWORD /*cchResult*/, DWORD * /*pcchResult*/, DWORD /*dwReserved*/)
 {
     return INET_E_DEFAULT_ACTION;
 }
@@ -354,7 +354,7 @@ STDMETHODIMP CSVNPluggableProtocol::CompareUrl(LPCWSTR pwszUrl1, LPCWSTR pwszUrl
 }
 
 STDMETHODIMP CSVNPluggableProtocol::ParseUrl(LPCWSTR /*pwzUrl*/, PARSEACTION /*parseAction*/, DWORD /*dwParseFlags*/,
-                                              LPWSTR /*pwzResult*/, DWORD /*cchResult*/, DWORD * /*pcchResult*/, DWORD /*dwReserved*/)
+                                             LPWSTR /*pwzResult*/, DWORD /*cchResult*/, DWORD * /*pcchResult*/, DWORD /*dwReserved*/)
 {
     return INET_E_DEFAULT_ACTION;
 }

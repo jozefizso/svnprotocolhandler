@@ -105,9 +105,9 @@ CAppUtils::~CAppUtils(void)
 {
 }
 
-string CAppUtils::PathEscape(const string& path)
+std::string CAppUtils::PathEscape(const std::string& path)
 {
-    string ret2;
+    std::string ret2;
     int c;
     int i;
     for (i=0; path[i]; ++i)
@@ -126,7 +126,7 @@ string CAppUtils::PathEscape(const string& path)
             ret2 += temp;
         }
     }
-    string ret;
+    std::string ret;
     for (i=0; ret2[i]; ++i)
     {
         c = (unsigned char)ret2[i];
