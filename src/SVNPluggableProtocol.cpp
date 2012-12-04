@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008, 2011 - Stefan Kueng
+// Copyright (C) 2008, 2011-2012 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,6 +19,7 @@
 #include "stdafx.h"
 #include "SVNPluggableProtocol.h"
 #include "AppUtils.h"
+#include "UnicodeUtils.h"
 
 // CSVNPluggableProtocol
 

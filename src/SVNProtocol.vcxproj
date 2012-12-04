@@ -104,7 +104,7 @@
       <ValidateAllParameters>false</ValidateAllParameters>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\sktoolslib;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MinimalRebuild>true</MinimalRebuild>
@@ -141,7 +141,7 @@
       <ProxyFileName>SVNProtocol_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\sktoolslib;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MinimalRebuild>true</MinimalRebuild>
@@ -179,7 +179,7 @@
       <ValidateAllParameters>false</ValidateAllParameters>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\sktoolslib;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -219,7 +219,7 @@
       <ProxyFileName>SVNProtocol_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\sktoolslib;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -246,10 +246,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ext\sktoolslib\AeroControls.cpp" />
+    <ClCompile Include="..\ext\sktoolslib\AeroGlass.cpp" />
+    <ClCompile Include="..\ext\sktoolslib\BaseDialog.cpp" />
+    <ClCompile Include="..\ext\sktoolslib\Registry.cpp" />
+    <ClCompile Include="..\ext\sktoolslib\UnicodeUtils.cpp" />
     <ClCompile Include="AppUtils.cpp" />
     <ClCompile Include="AuthDlg.cpp" />
-    <ClCompile Include="BaseDialog.cpp" />
-    <ClCompile Include="Registry.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -257,7 +260,6 @@
     <ClCompile Include="SVNPluggableProtocol.cpp" />
     <ClCompile Include="SVNPool.cpp" />
     <ClCompile Include="SVNProtocol.cpp" />
-    <ClCompile Include="UnicodeUtils.cpp" />
     <ClCompile Include="SVNProtocol_i.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -294,16 +296,18 @@
     <Midl Include="SVNProtocol.idl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ext\sktoolslib\AeroControls.h" />
+    <ClInclude Include="..\ext\sktoolslib\AeroGlass.h" />
+    <ClInclude Include="..\ext\sktoolslib\BaseDialog.h" />
+    <ClInclude Include="..\ext\sktoolslib\Registry.h" />
+    <ClInclude Include="..\ext\sktoolslib\UnicodeUtils.h" />
     <ClInclude Include="AppUtils.h" />
     <ClInclude Include="AuthDlg.h" />
-    <ClInclude Include="BaseDialog.h" />
-    <ClInclude Include="Registry.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SVN.h" />
     <ClInclude Include="SVNPluggableProtocol.h" />
     <ClInclude Include="SVNPool.h" />
-    <ClInclude Include="UnicodeUtils.h" />
     <ClInclude Include="SVNProtocol.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008 - Stefan Kueng
+// Copyright (C) 2008, 2012 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -63,11 +63,10 @@ LRESULT CAuthDialog::DoCommand(int id)
     case IDCANCEL:
     case IDOK:
         {
-            TCHAR buf[4096] = {0};
-            GetDlgItemText(*this, IDC_PASSWORD, buf, 4096);
-            password = buf;
-            GetDlgItemText(*this, IDC_USERNAME, buf, 4096);
-            username = buf;
+            auto buf = GetDlgItemText(IDC_PASSWORD);
+            password = buf.get();
+            buf = GetDlgItemText(IDC_USERNAME);
+            username = buf.get();
             EndDialog(*this, id);
         }
         break;
