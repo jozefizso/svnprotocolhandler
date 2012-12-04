@@ -18,7 +18,7 @@
 //
 #include "stdafx.h"
 #pragma warning(push)
-#include "svn.h"
+#include "SVN.h"
 #include "svn_sorts.h"
 #pragma warning(pop)
 
