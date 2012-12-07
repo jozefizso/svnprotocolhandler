@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008, 2011 - Stefan Kueng
+// Copyright (C) 2008, 2011-2012 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ void SVN::Create()
     if (Err == 0)
     {
         //set up the SVN_SSH param
-        std::wstring tsvn_ssh = (LPCTSTR)CRegStdString(_T("Software\\TortoiseSVN\\SSH"));
+        std::wstring tsvn_ssh = CRegStdString(_T("Software\\TortoiseSVN\\SSH"));
         if (!tsvn_ssh.empty())
         {
             svn_config_t * cfg = (svn_config_t *)apr_hash_get (m_pctx->config, SVN_CONFIG_CATEGORY_CONFIG,
@@ -150,12 +150,12 @@ void SVN::Create()
     m_pctx->progress_baton = this;
 
     //set up the SVN_SSH param
-    CString tsvn_ssh = ((LPCTSTR)CRegStdString(_T("Software\\TortoiseSVN\\SSH")));
+    CString tsvn_ssh = ((std::wstring)CRegStdString(_T("Software\\TortoiseSVN\\SSH"))).c_str();
     if (tsvn_ssh.IsEmpty())
     {
         // maybe the user has TortoiseSVN installed?
         // if so, try to use TortoisePlink with the default params for SSH
-        tsvn_ssh = ((LPCTSTR)CRegStdString(_T("Software\\TortoiseSVN\\Directory"), _T(""), false, HKEY_LOCAL_MACHINE));
+        tsvn_ssh = ((std::wstring)CRegStdString(_T("Software\\TortoiseSVN\\Directory"), _T(""), false, HKEY_LOCAL_MACHINE)).c_str();
         if (!tsvn_ssh.IsEmpty())
         {
             tsvn_ssh += _T("\\bin\\TortoisePlink.exe");
