@@ -16,6 +16,7 @@
 // along with this program; if not, write to the Free Software Foundation,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+
 #include "stdafx.h"
 #pragma warning(push)
 #include "SVN.h"
@@ -62,7 +63,7 @@ void SVN::Create()
     // system, we set the path here.
     // Note that SASL doesn't have to be initialized yet for this to work
     char buf[MAX_PATH] = {0};
-    if (GetModuleFileNameA(g_hInstance, buf, MAX_PATH))
+    if (GetModuleFileNameA(g_hInstance, buf, _countof(buf)))
     {
         char * pSlash = strrchr(buf, '\\');
         if (pSlash)
@@ -542,13 +543,13 @@ void SVN::progress_func(apr_off_t progress, apr_off_t total, void *baton, apr_po
         pSVN->m_SVNProgressMSG.BytesPerSecond = average;
         if (average < 1024)
         {
-            _stprintf_s(formatbuf, 4096, _T("%ld Bytes/s"), average);
+            _stprintf_s(formatbuf, _countof(formatbuf), _T("%ld Bytes/s"), average);
             pSVN->m_SVNProgressMSG.SpeedString = formatbuf;
         }
         else
         {
             double averagekb = (double)average / 1024.0;
-            _stprintf_s(formatbuf, 4096, _T("%.2f kBytes/s"), averagekb);
+            _stprintf_s(formatbuf, _countof(formatbuf), _T("%.2f kBytes/s"), averagekb);
             pSVN->m_SVNProgressMSG.SpeedString = formatbuf;
         }
         pSVN->progress_vector.clear();
