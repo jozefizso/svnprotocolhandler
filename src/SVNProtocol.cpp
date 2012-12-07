@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008 - Stefan Kueng
+// Copyright (C) 2008, 2012 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -16,11 +16,11 @@
 // along with this program; if not, write to the Free Software Foundation,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+
 #include "stdafx.h"
 #include "resource.h"
 #include "SVNProtocol.h"
 
-#pragma comment(linker, "\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 HINSTANCE g_hInstance;
 
@@ -80,4 +80,3 @@ STDAPI DllUnregisterServer(void)
     HRESULT hr = _AtlModule.DllUnregisterServer();
     return hr;
 }
-

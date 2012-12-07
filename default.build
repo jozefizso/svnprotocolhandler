@@ -125,7 +125,7 @@
         <exec program="signtool">
           <arg value="sign" />
           <arg value="${signinfo}" />
-          <arg value="bin\releasex64\SVNProtocol.dll" />
+          <arg value="bin\Release64\SVNProtocol.dll" />
         </exec>
       </if>
       <exec program="candle">
@@ -158,7 +158,7 @@
         <exec program="signtool">
           <arg value="sign" />
           <arg value="${signinfo}" />
-          <arg value="bin\release\SVNProtocol.dll" />
+          <arg value="bin\Release\SVNProtocol.dll" />
         </exec>
       </if>
       <exec program="candle">
