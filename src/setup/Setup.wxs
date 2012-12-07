@@ -28,7 +28,7 @@
         <Directory Id="INSTALLDIR" Name="SVNProtocolHandler">
 
           <Component Id="MainDll" Guid="056C75E8-DF5C-4a6e-B37B-7317D4C3E1C3">
-            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/release/SVNProtocol.dll" Vital="yes" />
+            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/Release/SVNProtocol.dll" Vital="yes" />
             <File Id="saslANON" Name="saslANONYMOUS.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslANONYMOUS.dll" Vital="yes" />
             <File Id="saslCRAMMD5" Name="saslCRAMMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslCRAMMD5.dll" Vital="yes" />
             <File Id="saslDIGEST" Name="saslDIGESTMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslDIGESTMD5.dll" Vital="yes" />
