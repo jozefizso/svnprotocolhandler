@@ -24,7 +24,7 @@
 
 HINSTANCE g_hInstance;
 
-class CSVNProtocolModule : public CAtlDllModuleT< CSVNProtocolModule >
+class CSVNProtocolModule : public ATL::CAtlDllModuleT< CSVNProtocolModule >
 {
 public :
     DECLARE_LIBID(LIBID_SVNProtocolLib)

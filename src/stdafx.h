@@ -59,4 +59,8 @@
 #include <wininet.h>
 #include <mlang.h>
 
-using namespace ATL;
+#ifndef CString
+#define CString ATL::CString
+#define CStringA ATL::CStringA
+#define CStringW ATL::CStringW
+#endif

@@ -28,8 +28,8 @@ SVN svn;
 // CSVNPluggableProtocol
 
 class ATL_NO_VTABLE CSVNPluggableProtocol :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CSVNPluggableProtocol, &CLSID_SVNPluggableProtocol>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<CSVNPluggableProtocol, &CLSID_SVNPluggableProtocol>,
     public IInternetProtocol,
     public IInternetProtocolInfo
 {
@@ -93,8 +93,8 @@ public:
 private:
     void CreateErrorPage(IInternetProtocolSink *pIProtSink);
 
-    CComPtr<IInternetProtocolSink> m_spSink;
-    CComPtr<IInternetBindInfo> m_spBindInfo;
+    ATL::CComPtr<IInternetProtocolSink> m_spSink;
+    ATL::CComPtr<IInternetBindInfo> m_spBindInfo;
     DWORD m_dwPos;
     CStringA m_sResultPage;
     svn_stream_t * stream;

@@ -40,7 +40,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
         m_dwPos = 0;
         bDownloadFinished = false;
         stream = NULL;
-        CAtlString strURL(sUrl);
+        ATL::CAtlString strURL(sUrl);
         pIProtSink->ReportProgress(BINDSTATUS_FINDINGRESOURCE, strURL);
         pIProtSink->ReportProgress(BINDSTATUS_CONNECTING, strURL);
         // first get the info for the url
@@ -57,7 +57,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                     const SVNInfoData * dirInfo = svn.GetFirstFileInfo(std::wstring(szUrl), -1, -1, svn_depth_immediates);
                     if (dirInfo)
                     {
-                        pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/html")));
+                        pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, ATL::CAtlString(_T("text/html")));
                         m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head>\n\
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
 <body><h2>Subversion Repository - Revision %ld : /</h2>\n\
@@ -129,7 +129,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                 // get the file content
                 pIProtSink->ReportProgress(BINDSTATUS_SENDINGREQUEST, strURL);
                 // get the mime-type
-                CAtlString mimeType = svn.GetMimeType(std::wstring(szUrl));
+                ATL::CAtlString mimeType = svn.GetMimeType(std::wstring(szUrl));
                 if (svn.Err)
                 {
                     CreateErrorPage(pIProtSink);
@@ -145,7 +145,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                     {
                         // no mime type set, assume text
                         ATLTRACE(_T("ReportProgress mime type = %s\n"), _T("text/plain"));
-                        pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CAtlString(_T("text/plain")));
+                        pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, ATL::CAtlString(_T("text/plain")));
                     }
                     m_fileSize = info->size;
                     DWORD bindf = 0;
