@@ -123,7 +123,7 @@ std::string CAppUtils::PathEscape(const std::string& path)
         {
             // char needs escaping
             char temp[7] = {0};
-            sprintf_s(temp, 7, "%%%02X", (unsigned char)c);
+            sprintf_s(temp, _countof(temp), "%%%02X", (unsigned char)c);
             ret2 += temp;
         }
     }
@@ -140,7 +140,7 @@ std::string CAppUtils::PathEscape(const std::string& path)
         {
             // char needs escaping
             char temp[7] = {0};
-            sprintf_s(temp, 7, "%%%02X", (unsigned char)c);
+            sprintf_s(temp, _countof(temp), "%%%02X", (unsigned char)c);
             ret += temp;
         }
     }
