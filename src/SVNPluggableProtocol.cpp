@@ -294,8 +294,8 @@ STDMETHODIMP CSVNPluggableProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
         }
         else if (size == 0)
             hr = E_PENDING;
-        *pcbRead = size;
-        m_dwPos += size;
+        *pcbRead = (DWORD)size;
+        m_dwPos += (DWORD)size;
         ATLTRACE(_T("READ  - delivered=%8d\n"), size);
     }
     else
