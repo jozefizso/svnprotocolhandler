@@ -56,7 +56,16 @@ typedef std::wstring wide_string;
 class SVNInfoData
 {
 public:
-    SVNInfoData(){}
+    SVNInfoData()
+        : rev(0)
+        , kind(svn_node_none)
+        , lastchangedrev(0)
+        , lastchangedtime(0)
+        , lock_davcomment(false)
+        , lock_createtime(0)
+        , lock_expirationtime(0)
+        , size(0)
+    {}
 
     stdstring           url;
     svn_revnum_t        rev;

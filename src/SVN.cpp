@@ -38,6 +38,16 @@ extern HINSTANCE g_hInstance;
 SVN::SVN(void)
     : bCreated(false)
     , parentpool(NULL)
+    , m_bCanceled(false)
+    , Err(NULL)
+    , pool(NULL)
+    , m_pctx(NULL)
+    , auth_baton(NULL)
+    , m_pos(0)
+    , m_progressWnd(NULL)
+    , m_progressWndIsCProgress(false)
+    , m_bShowProgressBar(false)
+    , progress_lastTicks(0)
 {
 }
 
