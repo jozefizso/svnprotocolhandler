@@ -57,8 +57,6 @@
       <arg value="subversion\libsvn_subr\internal_statements.h" />
     </exec>
 
-    <property name="machineoption" value="/MACHINE:X86" if="${platform == 'win32'}" />
-    <property name="machineoption" value="/MACHINE:x64" if="${platform == 'x64'}" />
     <foreach item="Folder" property="foldername">
       <in>
         <items>
@@ -78,20 +76,19 @@
         <property name="libname" value="${path::change-extension(fname, 'lib')}" />
         <mkdir dir="${configuration}_${platform}\${fname}" />
         <cl outputdir="${configuration}_${platform}\${fname}">
-          <arg value="/Ox" if="${configuration == 'release'}" />
-          <arg value="/Od" if="${configuration != 'release'}" />
-          <arg value="/GF" if="${configuration == 'release'}" />
-          <arg value="/Gs" if="${configuration == 'release'}" />
-          <arg value="/FD" />
+          <arg value="/O2" if="${configuration == 'release'}" />
+          <arg value="/Oy" if="${configuration == 'release'}" />
+          <arg value="/Od" if="${configuration == 'debug'}" />
           <arg value="/EHsc" />
-          <arg value="/MT" if="${(configuration == 'release')}" />
-          <arg value="/MTd" if="${(configuration != 'release')}" />
+          <arg value="/MT" if="${configuration == 'release'}" />
+          <arg value="/MTd" if="${configuration == 'debug'}" />
+          <arg value="/Gy" />
           <arg value="/W0" />
           <arg value="/nologo" />
           <arg value="/c" />
           <arg value="/Zi" />
           <arg value="/MP" />
-          <arg value="/errorReport:prompt" />
+          <arg value="/GL" if="${configuration == 'release'}" />
           <sources>
             <include name="subversion\${fname}\**.c" />
             <exclude name="subversion\libsvn_subr\win32_crash**.c" />
@@ -112,22 +109,26 @@
             <define name="APU_DECLARE_STATIC" />
             <define name="SVN_DEBUG" if="${configuration != 'release'}" />
             <define name="SVN_HAVE_SASL=1" />
+            <define name="APR_HAVE_IPV6" />
             <define name="alloca=_alloca" />
             <define name="snprintf=_snprintf" />
             <define name="WIN32" />
             <define name="_WINDOWS" />
             <define name="_WIN32" />
             <define name="_WIN32_WINNT" value="0x0501" />
-            <define name="APR_HAVE_IPV6" />
             <define name="WIN64" if="${platform == 'x64'}" />
             <define name="NDEBUG" if="${configuration == 'release'}"/>
-            <define name="_DEBUG" if="${configuration != 'release'}"/>
+            <define name="_DEBUG" if="${configuration == 'debug'}"/>
             <define name="XML_STATIC" />
+            <define name="_USING_V110_SDK71_" />
           </defines>
         </cl>
+        <property name="machineoption" value="/MACHINE:X86" if="${platform == 'win32'}"  />
+        <property name="machineoption" value="/MACHINE:X64" if="${platform == 'x64'}" />
         <lib
           output="${configuration}_${platform}\${fname}.lib"
-          options='/NOLOGO /SUBSYSTEM:WINDOWS ${machineoption}'>
+          options='/NOLOGO ${subsystem} ${machineoption}'>
+          <arg value="/LTCG" if="${configuration == 'release'}" />
           <sources>
             <include name="${configuration}_${platform}\${fname}\**.obj" />
             <include name="..\zlib\${configuration}_${platform}\zlibstat.lib" if="${fname == 'libsvn_subr'}"/>

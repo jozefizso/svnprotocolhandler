@@ -13,6 +13,8 @@
   <property name="crosscompile" value="" />
   <!-- default: we don't clean first -->
   <property name="cleanup" value="" />
+  <!-- the ${subsystem} to use -->
+  <property name="subsystem" value="/SUBSYSTEM:WINDOWS,5.01" />
 
   <include buildfile="default.build.user" />
 
@@ -46,6 +48,7 @@
     </description>
     <property name="platform" value="x64" />
     <property name="bindirextension" value="64" />
+    <property name="subsystem" value="/SUBSYSTEM:WINDOWS,5.02" />
   </target>
 
   <target name="cross" depends="x64">
