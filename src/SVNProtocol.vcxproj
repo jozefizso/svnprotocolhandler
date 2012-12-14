@@ -120,7 +120,8 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;..\ext\apr\debug_win32\libapr.lib;..\ext\apr-util\debug_win32\libaprutil.lib;..\ext\Subversion\debug_win32\libsvn_client.lib;..\ext\Subversion\debug_win32\libsvn_delta.lib;..\ext\Subversion\debug_win32\libsvn_diff.lib;..\ext\Subversion\debug_win32\libsvn_ra.lib;..\ext\Subversion\debug_win32\libsvn_ra_svn.lib;..\ext\Subversion\debug_win32\libsvn_subr.lib;..\ext\Subversion\debug_win32\libsvn_wc.lib;..\ext\cyrus-SASL\debug_win32\libsasls.lib;..\ext\sqlite\debug_win32\sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;libapr.lib;libaprutil.lib;libsvn_client.lib;libsvn_delta.lib;libsvn_diff.lib;libsvn_ra.lib;libsvn_ra_svn.lib;libsvn_subr.lib;libsvn_wc.lib;libsasls.lib;sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\ext\apr\$(Configuration)_$(Platform);..\ext\apr-util\$(Configuration)_$(Platform);..\ext\Subversion\$(Configuration)_$(Platform);..\ext\cyrus-SASL\$(Configuration)_$(Platform);..\ext\sqlite\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>SVNProtocol.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
@@ -157,9 +158,10 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;..\ext\apr\debug_x64\libapr.lib;..\ext\apr-util\debug_x64\libaprutil.lib;..\ext\Subversion\debug_x64\libsvn_client.lib;..\ext\Subversion\debug_x64\libsvn_delta.lib;..\ext\Subversion\debug_x64\libsvn_diff.lib;..\ext\Subversion\debug_x64\libsvn_ra.lib;..\ext\Subversion\debug_x64\libsvn_ra_svn.lib;..\ext\Subversion\debug_x64\libsvn_subr.lib;..\ext\Subversion\debug_x64\libsvn_wc.lib;..\ext\cyrus-SASL\debug_x64\libsasls.lib;..\ext\sqlite\debug_x64\sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>SVNProtocol.def</ModuleDefinitionFile>
+      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;libapr.lib;libaprutil.lib;libsvn_client.lib;libsvn_delta.lib;libsvn_diff.lib;libsvn_ra.lib;libsvn_ra_svn.lib;libsvn_subr.lib;libsvn_wc.lib;libsasls.lib;sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\ext\apr\$(Configuration)_$(Platform);..\ext\apr-util\$(Configuration)_$(Platform);..\ext\Subversion\$(Configuration)_$(Platform);..\ext\cyrus-SASL\$(Configuration)_$(Platform);..\ext\sqlite\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>SVNProtocol.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
@@ -195,7 +197,8 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;..\ext\apr\release_win32\libapr.lib;..\ext\apr-util\release_win32\libaprutil.lib;..\ext\Subversion\release_win32\libsvn_client.lib;..\ext\Subversion\release_win32\libsvn_delta.lib;..\ext\Subversion\release_win32\libsvn_diff.lib;..\ext\Subversion\release_win32\libsvn_ra.lib;..\ext\Subversion\release_win32\libsvn_ra_svn.lib;..\ext\Subversion\release_win32\libsvn_subr.lib;..\ext\Subversion\release_win32\libsvn_wc.lib;..\ext\cyrus-SASL\release_win32\libsasls.lib;..\ext\sqlite\release_win32\sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;libapr.lib;libaprutil.lib;libsvn_client.lib;libsvn_delta.lib;libsvn_diff.lib;libsvn_ra.lib;libsvn_ra_svn.lib;libsvn_subr.lib;libsvn_wc.lib;libsasls.lib;sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\ext\apr\$(Configuration)_$(Platform);..\ext\apr-util\$(Configuration)_$(Platform);..\ext\Subversion\$(Configuration)_$(Platform);..\ext\cyrus-SASL\$(Configuration)_$(Platform);..\ext\sqlite\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>SVNProtocol.def</ModuleDefinitionFile>
@@ -235,7 +238,8 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;..\ext\apr\release_x64\libapr.lib;..\ext\apr-util\release_x64\libaprutil.lib;..\ext\Subversion\release_x64\libsvn_client.lib;..\ext\Subversion\release_x64\libsvn_delta.lib;..\ext\Subversion\release_x64\libsvn_diff.lib;..\ext\Subversion\release_x64\libsvn_ra.lib;..\ext\Subversion\release_x64\libsvn_ra_svn.lib;..\ext\Subversion\release_x64\libsvn_subr.lib;..\ext\Subversion\release_x64\libsvn_wc.lib;..\ext\cyrus-SASL\release_x64\libsasls.lib;..\ext\sqlite\release_x64\sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>urlmon.lib;Wininet.lib;Ws2_32.lib;Mswsock.lib;Rpcrt4.lib;Imm32.lib;Secur32.lib;Crypt32.lib;libapr.lib;libaprutil.lib;libsvn_client.lib;libsvn_delta.lib;libsvn_diff.lib;libsvn_ra.lib;libsvn_ra_svn.lib;libsvn_subr.lib;libsvn_wc.lib;libsasls.lib;sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\ext\apr\$(Configuration)_$(Platform);..\ext\apr-util\$(Configuration)_$(Platform);..\ext\Subversion\$(Configuration)_$(Platform);..\ext\cyrus-SASL\$(Configuration)_$(Platform);..\ext\sqlite\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>SVNProtocol.def</ModuleDefinitionFile>
