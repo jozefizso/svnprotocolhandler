@@ -31,7 +31,6 @@
     </if>
   </target>
 
-
   <target name="build" depends="clean">
     <mkdir dir="${configuration}_${platform}" />
     <copy file="..\build\apu.hw" tofile="include\apu.h" overwrite="true" />
@@ -52,29 +51,21 @@
         <replacestring from="0.0.0" to="${APU_MAJOR_VERSION},${APU_MINOR_VERSION},${APU_PATCH_VERSION}" />
       </filterchain>
     </loadfile>
-    <echo file="libaprutilver.rc" message="${rcfile}" />
-    <rc rcfile="libaprutilver.rc" output="${configuration}_${platform}\libaprutil.res">
-      <includedirs>
-        <include name="..\apr\include" />
-        <include name="include" />
-      </includedirs>
-    </rc>
 
     <cl outputdir="${configuration}_${platform}">
-      <arg value="/Ox" if="${configuration == 'release'}" />
-      <arg value="/Od" if="${configuration != 'release'}" />
-      <arg value="/GF" if="${configuration == 'release'}" />
-      <arg value="/Gs" if="${configuration == 'release'}" />
-      <arg value="/FD" />
+      <arg value="/O2" if="${configuration == 'release'}" />
+      <arg value="/Oy" if="${configuration == 'release'}" />
+      <arg value="/Od" if="${configuration == 'debug'}" />
       <arg value="/EHsc" />
-      <arg value="/MT" if="${(configuration == 'release')}" />
-      <arg value="/MTd" if="${(configuration != 'release')}" />
+      <arg value="/MT" if="${configuration == 'release'}" />
+      <arg value="/MTd" if="${configuration == 'debug'}" />
+      <arg value="/Gy" />
       <arg value="/W0" />
       <arg value="/nologo" />
       <arg value="/c" />
       <arg value="/Zi" />
       <arg value="/MP" />
-      <arg value="/errorReport:prompt" />
+      <arg value="/GL" if="${configuration == 'release'}" />
       <sources>
         <include name="buckets\*.c" />
         <include name="crypto\*.c" />
@@ -100,8 +91,8 @@
         <include name="..\apr\include" />
       </includedirs>
       <defines>
-        <define name="APR_DECLARE_STATIC" />
         <define name="APU_DECLARE_STATIC" />
+        <define name="APR_DECLARE_STATIC" />
         <define name="WIN32" />
         <define name="_WINDOWS" />
         <define name="_WIN32" />
@@ -109,16 +100,17 @@
         <define name="WIN64" if="${platform == 'x64'}" />
         <define name="_WINDLL" />
         <define name="NDEBUG" if="${configuration == 'release'}"/>
-        <define name="_DEBUG" if="${configuration != 'release'}"/>
+        <define name="_DEBUG" if="${configuration == 'debug'}"/>
         <define name="COMPILED_FROM_DSP" />
         <define name="XML_STATIC" />
       </defines>
     </cl>
     <property name="machineoption" value="/MACHINE:X86" />
-    <property name="machineoption" value="/MACHINE:x64" if="${platform == 'x64'}" />
+    <property name="machineoption" value="/MACHINE:X64" if="${platform == 'x64'}" />
     <lib
       output="${configuration}_${platform}\libaprutil.lib"
-      options='/NOLOGO /DEBUG /PDB:".\${configuration}_${platform}/libaprutil.pdb" /SUBSYSTEM:WINDOWS'>
+      options='/NOLOGO /SUBSYSTEM:WINDOWS'>
+      <arg value="/LTCG" if="${configuration == 'release'}" />
       <sources>
         <include name="${configuration}_${platform}\*.obj" />
         <include name="xml\expat\lib\${configuration}_${platform}\*.obj" />
