@@ -188,6 +188,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\apr\include;..\ext\apr-util\include;..\ext\sktoolslib;..\ext\Subversion\subversion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
@@ -274,32 +275,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SVNProtocol.def" />
-    <None Include="SVNPluggableProtocol.rgs" />
-    <None Include="SVNProtocol.rgs" />
     <None Include="..\default.build" />
-    <None Include="setup\Setup.wxs" />
-    <None Include="setup\Setup64.wxs" />
-    <None Include="SVNProtocol.build" />
+    <None Include="..\ext\build\apr.build" />
+    <None Include="..\ext\build\aprutil.build" />
+    <None Include="..\ext\build\default.build" />
+    <None Include="..\ext\build\sasl.build" />
+    <None Include="..\ext\build\subversion.build" />
+    <None Include="..\ext\build\zlib.build" />
     <None Include="..\version.build.in" />
     <None Include="..\versioninfo.build" />
+    <None Include="setup\Setup.wxs" />
+    <None Include="setup\Setup64.wxs" />
     <None Include="setup\WixUI_Custom.wxs" />
-    <None Include="..\ext\build\apr.build" />
-    <None Include="..\ext\build\aprutil.build">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\ext\build\default.build">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\ext\build\sasl.build">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\ext\build\subversion.build">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\ext\build\zlib.build">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="SVNPluggableProtocol.rgs" />
+    <None Include="SVNProtocol.build" />
+    <None Include="SVNProtocol.def" />
+    <None Include="SVNProtocol.rgs" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="SVNProtocol.idl" />
