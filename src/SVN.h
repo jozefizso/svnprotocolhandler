@@ -35,16 +35,15 @@
 #include "svn_time.h"
 #include "svn_dso.h"
 #define STRUCT_IOVEC_DEFINED
-#include "..\ext\cyrus-SASL\include\sasl.h"
+#include "../ext/cyrus-SASL/include/sasl.h"
 
 #include "SVNPool.h"
 #include "UnicodeUtils.h"
 #include "Registry.h"
 
-typedef std::wstring wide_string;
 #ifndef stdstring
 #   ifdef UNICODE
-#       define stdstring wide_string
+#       define stdstring std::wstring
 #   else
 #       define stdstring std::string
 #   endif
