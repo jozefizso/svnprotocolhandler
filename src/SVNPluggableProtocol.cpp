@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008, 2011-2012 - Stefan Kueng
+// Copyright (C) 2008, 2011-2013 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                     if (dirInfo)
                     {
                         pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, ATL::CAtlString(_T("text/html")));
-                        m_sResultPage.Format("<html><head><title>Subversion Repository - Revision %ld : /</title></head>\n\
+                        m_sResultPage.Format("<!DOCTYPE html><head><title>Subversion Repository - Revision %ld : /</title></head>\n\
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
 <body><h2>Subversion Repository - Revision %ld : /</h2>\n\
 <table cellspacing=\"5\">\n\
@@ -108,7 +108,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                         {
                             m_sResultPage += it->second;
                         }
-                        m_sResultPage += "</table>\n<hr noshade><em>svn protocol handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
+                        m_sResultPage += "</table>\n<hr><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
 
                         pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
                         pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
@@ -369,9 +369,9 @@ STDMETHODIMP CSVNPluggableProtocol::QueryInfo( LPCWSTR /*pwzUrl*/, QUERYOPTION /
 
 void CSVNPluggableProtocol::CreateErrorPage(IInternetProtocolSink *pIProtSink)
 {
-    m_sResultPage = "<html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
+    m_sResultPage = "<!DOCTYPE html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
     m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-    m_sResultPage += "<hr noshade><em>svn protocol handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
+    m_sResultPage += "<hr><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
     pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
     pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
     pIProtSink->ReportResult(S_OK, 0, NULL);
