@@ -82,7 +82,6 @@
       <arg value="/LTCG" if="${configuration == 'release'}" />
       <sources>
         <include name="${configuration}_${platform}\*.obj" />
-        <exclude name="${configuration}_${platform}\example.obj" />
       </sources>
     </lib>
   </target>
