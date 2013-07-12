@@ -4,7 +4,7 @@
     UpgradeCode="AED4E391-29E0-4b50-9C0B-BD151B9B0323"
     Name="SVNProtocolHandler"
     Id="*"
-    Language="1031"
+    Language="1033"
     Codepage="1252"
     Version="1.5.1"
     Manufacturer="TortoiseSVN.net">
@@ -12,7 +12,7 @@
     <Package Id="*" Keywords="Installer"
           Description="SVNProtocolHandler"
           Comments="http://tortoisesvn.net" Manufacturer="TortoiseSVN"
-          InstallerVersion="200" Platform="x64" Languages="1031" Compressed="yes" SummaryCodepage="1252" />
+          InstallerVersion="200" Platform="x64" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
     <Upgrade Id="AED4E391-29E0-4b50-9C0B-BD151B9B0323" >
       <!-- flag is set if the install will trigger an upgrade of an existing install -->
