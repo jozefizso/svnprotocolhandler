@@ -45,6 +45,7 @@
       <arg value="/Zi" />
       <arg value="/MP" />
       <arg value="/GL" if="${configuration == 'release'}" />
+      <arg value="/arch:IA32" if="${configuration == 'release' and platform == 'win32'}" />
       <sources>
         <include name="network_io\win32\*.c" />
         <include name="network_io\unix\inet_ntop.c" />
@@ -92,11 +93,11 @@
         <define name="_WINDOWS" />
         <define name="_WIN32" />
         <define name="WINNT" />
-        <define name="_WIN32_WINNT" value="0x0501"/>
+        <define name="_WIN32_WINNT" value="0x0501" />
         <define name="WIN64" if="${platform == 'x64'}" />
         <define name="_WINDLL" />
-        <define name="NDEBUG" if="${configuration == 'release'}"/>
-        <define name="_DEBUG" if="${configuration == 'debug'}"/>
+        <define name="NDEBUG" if="${configuration == 'release'}" />
+        <define name="_DEBUG" if="${configuration == 'debug'}" />
         <define name="_USING_V110_SDK71_" />
       </defines>
     </cl>
