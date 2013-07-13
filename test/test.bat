@@ -48,9 +48,10 @@ svn cp %WC%\branches\b %WC%\tags\t
 svn ci %WC%\tags -m "tagging current b content"
 
 echo Starting svnserve...
-echo Open IE in svn://localhost:3690/
+start "svnserve" svnserve.exe --daemon --foreground --root %REPOPATH% --listen-host localhost
 
-svnserve.exe --daemon --root %REPOPATH% --listen-host localhost
+echo Opening IE in svn://localhost:3690/...
+start "iexplore" iexplore.exe svn://localhost:3690/
 
 endlocal
 pause
