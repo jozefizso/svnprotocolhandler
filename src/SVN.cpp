@@ -1,6 +1,6 @@
 // SVNProtocolHandler - an asynchronous protocol handler for the svn:// protocol
 
-// Copyright (C) 2008, 2011-2012 - Stefan Kueng
+// Copyright (C) 2008, 2011-2013 - Stefan Kueng
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ void SVN::Create()
     }
 
     parentpool = svn_pool_create(NULL);
-    svn_error_clear(svn_client_create_context(&m_pctx, parentpool));
+    svn_error_clear(svn_client_create_context2(&m_pctx, NULL, parentpool));
 
     Err = svn_config_ensure(NULL, parentpool);
     pool = svn_pool_create (parentpool);
@@ -471,7 +471,7 @@ svn_revnum_t SVN::GetHEADRevision(const std::wstring& url)
     if (urla == NULL)
         return rev;
 
-    Err = svn_client_open_ra_session (&ra_session, urla, m_pctx, localpool);
+    Err = svn_client_open_ra_session2 (&ra_session, urla, NULL, m_pctx, localpool, localpool);
     if (Err)
         return rev;
 
@@ -494,7 +494,7 @@ const CString SVN::GetMimeType(const stdstring& url)
     apr_hash_t * props = apr_hash_make(localpool);
 
     const char * urla = svn_uri_canonicalize(CAppUtils::PathEscape(CUnicodeUtils::StdGetUTF8(url)).c_str(), localpool);
-    Err = svn_client_propget4(&props, "svn:mime-type", urla, &pegrev, &rev, NULL, svn_depth_empty, NULL, m_pctx, localpool, localpool);
+    Err = svn_client_propget5(&props, NULL, "svn:mime-type", urla, &pegrev, &rev, NULL, svn_depth_empty, NULL, m_pctx, localpool, localpool);
     if (Err == NULL)
     {
         apr_hash_index_t *hi;
