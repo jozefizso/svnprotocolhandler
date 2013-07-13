@@ -58,9 +58,13 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                     if (dirInfo)
                     {
                         pIProtSink->ReportProgress(BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, ATL::CAtlString(_T("text/html")));
-                        m_sResultPage.Format("<!DOCTYPE html><head><title>Subversion Repository - Revision %ld : /</title></head>\n\
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
-<body><h2>Subversion Repository - Revision %ld : /</h2>\n\
+                        m_sResultPage.Format("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n\
+<head>\n\
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
+    <title>Subversion Repository - Revision %ld : /</title>\n\
+</head>\n\
+<body>\n\
+<h2>Subversion Repository - Revision %ld : /</h2>\n\
 <table cellspacing=\"5\">\n\
 <tr align=\"left\"><th width=\"50%%\" align=\"left\">name</th><th align=\"right\" width=\"5%%\">rev</th><th align=\"left\">author</th><th align=\"left\">lock author</th></tr>\n", rev, rev);
 
