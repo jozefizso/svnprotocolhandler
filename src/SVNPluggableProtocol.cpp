@@ -62,7 +62,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
 <body><h2>Subversion Repository - Revision %ld : /</h2>\n\
 <table cellspacing=\"5\">\n\
-<tr align=\"left\"><th width=\"50%%\">name</th><th align=\"right\" width=\"5%%\">rev</th><th>author</th><th>lock author</th></tr>\n", rev, rev);
+<tr align=\"left\"><th width=\"50%%\" align=\"left\">name</th><th align=\"right\" width=\"5%%\">rev</th><th align=\"left\">author</th><th align=\"left\">lock author</th></tr>\n", rev, rev);
 
                         CString pageUrl = sUrl;
                         CStringA sItemInfo;
@@ -86,14 +86,14 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                                 if (dirInfo->kind == svn_node_dir)
                                 {
                                     // folders shown in bold
-                                    sItemInfo.Format("<tr><td><a href=\"%s\"><b>%s</b></a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n",
+                                    sItemInfo.Format("<tr><td align=\"left\"><a href=\"%s\"><b>%s</b></a></td><td align=\"right\">%ld</td><td align=\"left\">%s</td><td align=\"left\">%s</td></tr>\n",
                                         (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
                                         dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
                                     infoMapDirs[sItemUrl] = sItemInfo;
                                 }
                                 else
                                 {
-                                    sItemInfo.Format("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%ld</td><td>%s</td><td>%s</td></tr>\n",
+                                    sItemInfo.Format("<tr><td align=\"left\"><a href=\"%s\">%s</a></td><td align=\"right\">%ld</td><td align=\"left\">%s</td><td align=\"left\">%s</td></tr>\n",
                                         (LPCSTR)sItemUrl, (LPCSTR)CAppUtils::PathUnescape(sItemName),
                                         dirInfo->lastchangedrev, CUnicodeUtils::StdGetUTF8(dirInfo->author).c_str(), CUnicodeUtils::StdGetUTF8(dirInfo->lock_owner).c_str());
                                     infoMapFiles[sItemUrl] = sItemInfo;
