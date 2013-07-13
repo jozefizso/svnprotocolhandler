@@ -112,7 +112,7 @@ STDMETHODIMP CSVNPluggableProtocol::Start(
                         {
                             m_sResultPage += it->second;
                         }
-                        m_sResultPage += "</table>\n<hr><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
+                        m_sResultPage += "</table>\n<hr><p><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a></em>.</p></body></html>";
 
                         pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
                         pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
@@ -373,9 +373,14 @@ STDMETHODIMP CSVNPluggableProtocol::QueryInfo( LPCWSTR /*pwzUrl*/, QUERYOPTION /
 
 void CSVNPluggableProtocol::CreateErrorPage(IInternetProtocolSink *pIProtSink)
 {
-    m_sResultPage = "<!DOCTYPE html><head><title>Error</title></head><body><h2>An error occurred:</h2>";
+    m_sResultPage = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n\
+<head>\n\
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\
+    <title>Error</title>\n\
+</head>\n\
+<body><h2>An error occurred:</h2>";
     m_sResultPage += CUnicodeUtils::StdGetUTF8(svn.GetLastErrorMsg()).c_str();
-    m_sResultPage += "<hr><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a>.</em></body></html>";
+    m_sResultPage += "<hr><p><em>SVN Protocol Handler created by <a href=\"http://tortoisesvn.net/\">TortoiseSVN</a></em>.</p></body></html>";
     pIProtSink->ReportData(BSCF_FIRSTDATANOTIFICATION, 0, m_sResultPage.GetLength());
     pIProtSink->ReportData(BSCF_LASTDATANOTIFICATION | BSCF_DATAFULLYAVAILABLE, m_sResultPage.GetLength(), m_sResultPage.GetLength());
     pIProtSink->ReportResult(S_OK, 0, NULL);
