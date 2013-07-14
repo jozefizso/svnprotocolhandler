@@ -553,7 +553,7 @@ void SVN::progress_func(apr_off_t progress, apr_off_t total, void *baton, apr_po
         pSVN->m_SVNProgressMSG.BytesPerSecond = average;
         if (average < 1024)
         {
-            _stprintf_s(formatbuf, _countof(formatbuf), _T("%ld Bytes/s"), average);
+            _stprintf_s(formatbuf, _countof(formatbuf), _T("%I64d Bytes/s"), average);
             pSVN->m_SVNProgressMSG.SpeedString = formatbuf;
         }
         else
