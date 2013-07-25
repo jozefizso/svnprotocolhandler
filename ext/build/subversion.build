@@ -20,7 +20,7 @@
     </if>
   </target>
 
-  <target name="build">
+  <target name="build" depends="clean">
     <mkdir dir="${configuration}_${platform}" />
     <copy file="subversion\svn_private_config.hw" tofile="subversion\svn_private_config.h" overwrite="true" />
     <loadfile file="subversion\svn_private_config.hw" property="configfile">
@@ -107,7 +107,7 @@
           <defines>
             <define name="APR_DECLARE_STATIC" />
             <define name="APU_DECLARE_STATIC" />
-            <define name="SVN_DEBUG" if="${configuration != 'release'}" />
+            <define name="SVN_DEBUG" if="${configuration == 'debug'}" />
             <define name="SVN_HAVE_SASL=1" />
             <define name="APR_HAVE_IPV6" />
             <define name="alloca=_alloca" />
@@ -120,15 +120,15 @@
             <define name="NDEBUG" if="${configuration == 'release'}" />
             <define name="_DEBUG" if="${configuration == 'debug'}" />
             <define name="XML_STATIC" />
-            <define name="_USING_V110_SDK71_" />
             <define name="PSAPI_VERSION=1" />
+            <define name="_USING_V110_SDK71_" />
           </defines>
         </cl>
         <property name="machineoption" value="/MACHINE:X86" if="${platform == 'win32'}" />
         <property name="machineoption" value="/MACHINE:X64" if="${platform == 'x64'}" />
         <lib
           output="${configuration}_${platform}\${fname}.lib"
-          options="/NOLOGO ${subsystem} ${machineoption}">
+          options='/NOLOGO ${subsystem} ${machineoption}'>
           <arg value="Psapi.lib" if="${fname == 'libsvn_subr'}" />
           <arg value="Version.lib" if="${fname == 'libsvn_subr'}" />
           <arg value="/LTCG" if="${configuration == 'release'}" />

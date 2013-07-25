@@ -12,6 +12,7 @@
       <nant target="clean">
         <buildfiles>
           <include name="*.build" />
+          <!-- avoid recursion -->
           <exclude name="default.build" />
         </buildfiles>
       </nant>
