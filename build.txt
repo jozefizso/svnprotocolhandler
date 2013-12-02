@@ -34,10 +34,10 @@ You only have to do this once.
    You can always access it online at http://msdn2.microsoft.com/en-us/Library
 
 \subsection Requirements2 Next you need to install some utilities/programs.
-- WiX(\b 1)                   http://wixtoolset.org/
-- NAnt(\b 1)                  http://nant.sourceforge.net
-- TortoiseSVN                 http://tortoisesvn.net
-.
+- TortoiseSVN                   http://tortoisesvn.net
+- WiX 3.8(\b 1)                 http://wixtoolset.org/
+- NAnt 0.92(\b 1)               http://nant.sourceforge.net
+
 (\b 1) Add the paths of the binaries to the PATH environment variable. You may have to
     logoff/logon to make the new environment variables take effect!
 
