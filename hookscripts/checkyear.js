@@ -1,6 +1,6 @@
 /* This script is a local pre-commit hook script.
  * It's used to check whether the copyright year of modified files has been
- * bumped up to the current (2013) year.
+ * bumped up to the current (2014) year.
  *
  * Only *.cpp, *.h and *.idl files are checked
  *
