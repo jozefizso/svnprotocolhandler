@@ -2,43 +2,49 @@
 <project name="SVNProtocol" default="all">
 
 
-    <target name="clean">
+  <target name="clean">
 
-        <if test="${cleanup == 'yes'}">
-            <exec program="devenv.com" >
-                <arg value="..\SVNProtocol.sln" />
-                <arg value="/clean" />
-                <arg value="${configuration}|${platform}" />
-            </exec>
-        </if>
-    </target>
+    <if test="${cleanup == 'yes'}">
+      <exec program="msbuild.exe" >
+        <arg value="..\SVNProtocol.sln" />
+        <arg value="/t:Clean" />
+        <arg value="/p:Configuration=${configuration}" />
+        <arg value="/p:Platform=${platform}" />
+        <arg value="/verbosity:quiet" />
+        <arg value="/maxcpucount" />
+      </exec>
+    </if>
+  </target>
 
 
-    <target name="versioninfo">
-        <nant target="versioninfo">
-            <buildfiles>
-                <include name="..\versioninfo.build" />
-            </buildfiles>
-        </nant>
-        <loadfile file="version.in" property="versionheaderfile">
-            <filterchain>
-                <replacetokens begintoken="$" endtoken="$">
-                    <token key="MajorVersion" value="${environment::get-variable('MajorVersion')}" />
-                    <token key="MinorVersion" value="${environment::get-variable('MinorVersion')}" />
-                    <token key="MicroVersion" value="${environment::get-variable('Microversion')}" />
-                    <token key="WCREV" value="${environment::get-variable('WCREV')}" />
-                </replacetokens>
-            </filterchain>
-        </loadfile>
-        <echo file="version.h" message="${versionheaderfile}" />
-    </target>
+  <target name="versioninfo">
+    <nant target="versioninfo">
+      <buildfiles>
+          <include name="..\versioninfo.build" />
+      </buildfiles>
+    </nant>
+    <loadfile file="version.in" property="versionheaderfile">
+      <filterchain>
+        <replacetokens begintoken="$" endtoken="$">
+          <token key="MajorVersion" value="${environment::get-variable('MajorVersion')}" />
+          <token key="MinorVersion" value="${environment::get-variable('MinorVersion')}" />
+          <token key="MicroVersion" value="${environment::get-variable('Microversion')}" />
+          <token key="WCREV" value="${environment::get-variable('WCREV')}" />
+        </replacetokens>
+      </filterchain>
+    </loadfile>
+    <echo file="version.h" message="${versionheaderfile}" />
+  </target>
 
-    <target name="SVNProtocol" depends="clean,versioninfo">
-        <exec program="devenv.com" >
-            <arg value="..\SVNProtocol.sln" />
-            <arg value="/rebuild" />
-            <arg value="${configuration}|${platform}" />
-        </exec>
-    </target>
+  <target name="SVNProtocol" depends="clean,versioninfo">
+    <exec program="msbuild.exe" >
+      <arg value="..\SVNProtocol.sln" />
+      <arg value="/t:Rebuild" />
+      <arg value="/p:Configuration=${configuration}" />
+      <arg value="/p:Platform=${platform}" />
+      <arg value="/verbosity:minimal" />
+      <arg value="/maxcpucount" />
+    </exec>
+  </target>
 
 </project>
