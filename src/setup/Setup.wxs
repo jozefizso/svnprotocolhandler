@@ -21,20 +21,22 @@
 
     <Media Id="1" Cabinet="SVNPH.cab" EmbedCab="yes" CompressionLevel="high" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-    <Condition Message="This application only runs on Windows 2000 and later.">VersionNT &gt;= 500</Condition>
+    <Condition Message="This application only runs on Vista and later.">
+      <![CDATA[Installed OR (VersionNT >= 600)]]>
+    </Condition>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="INSTALLDIR" Name="SVNProtocolHandler">
 
           <Component Id="MainDll" Guid="056C75E8-DF5C-4a6e-B37B-7317D4C3E1C3">
-            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/Release/SVNProtocol.dll" Vital="yes" />
-            <File Id="saslANON" Name="saslANONYMOUS.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslANONYMOUS.dll" Vital="yes" />
-            <File Id="saslCRAMMD5" Name="saslCRAMMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslCRAMMD5.dll" Vital="yes" />
-            <File Id="saslDIGEST" Name="saslDIGESTMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslDIGESTMD5.dll" Vital="yes" />
-            <File Id="saslLOGIN" Name="saslLOGIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslLOGIN.dll" Vital="yes" />
-            <File Id="saslNTLM" Name="saslNTLM.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslNTLM.dll" Vital="yes" />
-            <File Id="saslPLAIN" Name="saslPLAIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslPLAIN.dll" Vital="yes" />
+            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/Release/SVNProtocol.dll" />
+            <File Id="saslANON" Name="saslANONYMOUS.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslANONYMOUS.dll" />
+            <File Id="saslCRAMMD5" Name="saslCRAMMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslCRAMMD5.dll" />
+            <File Id="saslDIGEST" Name="saslDIGESTMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslDIGESTMD5.dll" />
+            <File Id="saslLOGIN" Name="saslLOGIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslLOGIN.dll" />
+            <File Id="saslNTLM" Name="saslNTLM.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslNTLM.dll" />
+            <File Id="saslPLAIN" Name="saslPLAIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\win32\saslPLAIN.dll" />
             <RegistryValue Root="HKCR" Key="AppID\SVNProtocol.DLL" Name="AppID" Value="{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Type="string" />
             <RegistryValue Root="HKCR" Key="AppID\{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Value="SVNProtocol" Type="string" />
             <RegistryValue Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Value="SVN Pluggable Protocol" Type="string" />

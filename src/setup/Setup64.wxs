@@ -28,13 +28,13 @@
         <Directory Id="INSTALLDIR" Name="SVNProtocolHandler">
 
           <Component Id="MainDll" Guid="A6CD3146-98ED-4321-9069-C11C763C119C" Win64="yes">
-            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/Release64/SVNProtocol.dll" Vital="yes" />
-            <File Id="saslANON" Name="saslANONYMOUS.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslANONYMOUS.dll" Vital="yes" />
-            <File Id="saslCRAMMD5" Name="saslCRAMMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslCRAMMD5.dll" Vital="yes" />
-            <File Id="saslDIGEST" Name="saslDIGESTMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslDIGESTMD5.dll" Vital="yes" />
-            <File Id="saslLOGIN" Name="saslLOGIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslLOGIN.dll" Vital="yes" />
-            <File Id="saslNTLM" Name="saslNTLM.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslNTLM.dll" Vital="yes" />
-            <File Id="saslPLAIN" Name="saslPLAIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslPLAIN.dll" Vital="yes" />
+            <File Id="SVNProtocol.DLL" Name="SVNProtocol.dll" DiskId="1" Source="bin/Release64/SVNProtocol.dll" />
+            <File Id="saslANON" Name="saslANONYMOUS.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslANONYMOUS.dll" />
+            <File Id="saslCRAMMD5" Name="saslCRAMMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslCRAMMD5.dll" />
+            <File Id="saslDIGEST" Name="saslDIGESTMD5.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslDIGESTMD5.dll" />
+            <File Id="saslLOGIN" Name="saslLOGIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslLOGIN.dll" />
+            <File Id="saslNTLM" Name="saslNTLM.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslNTLM.dll" />
+            <File Id="saslPLAIN" Name="saslPLAIN.dll" DiskId="1" Source="ext\cyrus-SASL\precompiled modules\x64\saslPLAIN.dll" />
             <RegistryValue Root="HKCR" Key="AppID\SVNProtocol.DLL" Name="AppID" Value="{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Type="string" />
             <RegistryValue Root="HKCR" Key="AppID\{E066CD38-CD6D-4fde-A58D-54F1A81B271E}" Value="SVNProtocol" Type="string" />
             <RegistryValue Root="HKCR" Key="CLSID\{6B46B201-6330-4b79-BB4D-34BE6FB3423B}" Value="SVN Pluggable Protocol" Type="string" />
